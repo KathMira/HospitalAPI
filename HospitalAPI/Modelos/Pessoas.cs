@@ -2,7 +2,7 @@
 
 public class Pessoas
 {
-    public int IdPessoas { get; set; }
+    public int Id { get; set; }
 
     public string NomeCompleto { get; set; } = string.Empty;
 
@@ -12,7 +12,25 @@ public class Pessoas
 
     public string Endereco { get; set; } = string.Empty;
 
-    public DateOnly DataNascimento {  get; set; }
+    public DateOnly DataNascimento { get; set; }
 
     public int IdImagemDocumento { get; set; }
+
+    public Pessoas() { }
+    public Pessoas(string nomeCompleto, int cpf, DateOnly dataNascimento, int telefone, string endereco)
+    {
+        NomeCompleto = nomeCompleto;
+        CPF = cpf;
+        Telefone = telefone;
+        Endereco = endereco;
+        DataNascimento = dataNascimento;
+    }
+    public void Atualizar(string nomeCompleto, int cpf, DateOnly dataNascimento, int telefone, string endereco)
+    {
+        NomeCompleto = nomeCompleto;
+        CPF = cpf;
+        Telefone = telefone;
+        Endereco = endereco;
+        DataNascimento = dataNascimento;
+    }
 }
