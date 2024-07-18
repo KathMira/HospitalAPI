@@ -15,7 +15,7 @@ public class Medico
 
     public Medico(CadastrarMedicoDto cadastrarMedicoDto)
     {
-        Pessoa = new Pessoas(cadastrarMedicoDto.NomeCompleto, cadastrarMedicoDto.CPF, DateOnly.FromDateTime (cadastrarMedicoDto.DataNascimento),
+        Pessoa = new Pessoas(cadastrarMedicoDto.NomeCompleto, cadastrarMedicoDto.CPF, DateOnly.FromDateTime(cadastrarMedicoDto.DataNascimento),
         cadastrarMedicoDto.Telefone, cadastrarMedicoDto.Endereco);
         CRM = cadastrarMedicoDto.CRM;
         Area = cadastrarMedicoDto.Area;

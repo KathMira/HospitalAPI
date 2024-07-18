@@ -4,6 +4,7 @@ using HospitalAPI.Banco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalAPI.Migrations
 {
     [DbContext(typeof(HospitalAPIContext))]
-    partial class HospitalAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20240712140401_Adicionando Consulta e exame")]
+    partial class AdicionandoConsultaeexame
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,10 +36,10 @@ namespace HospitalAPI.Migrations
                     b.Property<DateTime>("DataAgendamento")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DataFim")
+                    b.Property<DateTime>("DataFim")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DataInicio")
+                    b.Property<DateTime>("DataInicio")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("MedicoId")
@@ -83,10 +86,10 @@ namespace HospitalAPI.Migrations
                     b.Property<DateTime>("DataAgendamento")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DataFim")
+                    b.Property<DateTime>("DataFim")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DataInicio")
+                    b.Property<DateTime>("DataInicio")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("MedicoId")

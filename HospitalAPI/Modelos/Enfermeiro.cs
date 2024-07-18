@@ -14,8 +14,8 @@ public class Enfermeiro
     public Enfermeiro() { }
     public Enfermeiro(CadastrarPessoaDto cadastrarPessoaDto)
     {
-     Pessoa = new Pessoas(cadastrarPessoaDto.NomeCompleto, cadastrarPessoaDto.CPF, DateOnly.FromDateTime(cadastrarPessoaDto.DataNascimento), cadastrarPessoaDto.Telefone,
-         cadastrarPessoaDto.Endereco);
+        Pessoa = new Pessoas(cadastrarPessoaDto.NomeCompleto, cadastrarPessoaDto.CPF, DateOnly.FromDateTime(cadastrarPessoaDto.DataNascimento), cadastrarPessoaDto.Telefone,
+            cadastrarPessoaDto.Endereco);
 
     }
 }

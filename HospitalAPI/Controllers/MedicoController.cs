@@ -18,12 +18,19 @@ public class MedicoController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CadastrarMedico([FromBody]CadastrarMedicoDto cadastrarMedicoDto)
+    public IActionResult CadastrarMedico([FromBody] CadastrarMedicoDto cadastrarMedicoDto)
     {
         Medico medico = new Medico(cadastrarMedicoDto);
         context.Medicos.Add(medico);
         context.SaveChanges();
         return Ok("Médico cadastrado com sucesso!");
+    }
+
+    [HttpGet]
+    public IActionResult VerTodosMedicos()
+    {
+        List<Medico> medicos = context.Medicos.ToList();
+        return Ok(medicos);
     }
 
 }

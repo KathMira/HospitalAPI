@@ -17,7 +17,7 @@ public class EnfermeiroController : ControllerBase
         this.context = context;
     }
     [HttpPost]
-    public IActionResult CadastrarEnfermeiro([FromBody]CadastrarPessoaDto cadastrarPessoaDto)
+    public IActionResult CadastrarEnfermeiro([FromBody] CadastrarPessoaDto cadastrarPessoaDto)
     {
         Enfermeiro enfermeiro = new Enfermeiro(cadastrarPessoaDto);
         context.Enfermeiros.Add(enfermeiro);

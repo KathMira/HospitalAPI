@@ -10,6 +10,7 @@ public class Paciente
     public int PessoaId { get; set; }
 
     public int Id { get; set; }
+
     public float Peso { get; set; }
 
     public float Altura { get; set; }
@@ -29,9 +30,9 @@ public class Paciente
     public virtual Pessoas Pessoa { get; set; }
 
     public Paciente() { }
-    public Paciente (CadastrarPacienteDto cadastrarPacienteDto)
+    public Paciente(CadastrarPacienteDto cadastrarPacienteDto)
     {
-        Pessoa = new Pessoas (cadastrarPacienteDto.NomeCompleto, cadastrarPacienteDto.CPF, DateOnly.FromDateTime(cadastrarPacienteDto.DataNascimento),
+        Pessoa = new Pessoas(cadastrarPacienteDto.NomeCompleto, cadastrarPacienteDto.CPF, DateOnly.FromDateTime(cadastrarPacienteDto.DataNascimento),
             cadastrarPacienteDto.Telefone, cadastrarPacienteDto.Endereco);
         Peso = cadastrarPacienteDto.Peso;
         Altura = cadastrarPacienteDto.Altura;
@@ -42,7 +43,7 @@ public class Paciente
         TemConvenio = cadastrarPacienteDto.TemConvenio;
 
     }
-    public void Atualizar (CadastrarPacienteDto cadastrarPacienteDto)
+    public void Atualizar(CadastrarPacienteDto cadastrarPacienteDto)
     {
         Pessoa.Atualizar(cadastrarPacienteDto.NomeCompleto, cadastrarPacienteDto.CPF, DateOnly.FromDateTime(cadastrarPacienteDto.DataNascimento), cadastrarPacienteDto.Telefone, cadastrarPacienteDto.Endereco);
         Peso = cadastrarPacienteDto.Peso;

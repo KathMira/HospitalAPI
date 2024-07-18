@@ -16,6 +16,7 @@ public class PacienteController : ControllerBase
     {
         this.context = context;
     }
+
     [HttpPost]
     public IActionResult CadastroPaciente([FromBody] CadastrarPacienteDto cadastrarPacienteDto)
     {
@@ -32,15 +33,15 @@ public class PacienteController : ControllerBase
         }
     }
 
-
     [HttpGet]
     public IActionResult ListarTodosPacientes()
     {
         List<Paciente> pegaPaciente = context.Pacientes.Include(x => x.Pessoa).ToList();
         return Ok(pegaPaciente);
     }
+
     [HttpDelete("{Id}")]
-    public IActionResult ApagarPaciente([FromRoute]int Id)
+    public IActionResult ApagarPaciente([FromRoute] int Id)
     {
         Paciente paciente = context.Pacientes.FirstOrDefault(x => x.Id == Id);
         if (paciente == null)
@@ -53,7 +54,7 @@ public class PacienteController : ControllerBase
     }
 
     [HttpPut("{Id}")]
-    public IActionResult AtualizarPaciente([FromRoute]int Id, [FromBody]CadastrarPacienteDto cadastrarPacienteDto)
+    public IActionResult AtualizarPaciente([FromRoute] int Id, [FromBody] CadastrarPacienteDto cadastrarPacienteDto)
     {
         Paciente paciente = context.Pacientes.Include(x => x.Pessoa).FirstOrDefault(x => x.Id == Id);
         if (paciente == null)
