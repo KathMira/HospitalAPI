@@ -1,4 +1,4 @@
-﻿namespace HospitalAPI.DTOs;
+﻿namespace HospitalAPI.DTOs.Entrada;
 
 public class AgendarConsultaDto
 {

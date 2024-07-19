@@ -1,5 +1,5 @@
 ﻿using HospitalAPI.Banco;
-using HospitalAPI.DTOs;
+using HospitalAPI.DTOs.Entrada;
 using HospitalAPI.Modelos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +18,13 @@ public class PacienteController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CadastroPaciente([FromBody] CadastrarPacienteDto cadastrarPacienteDto)
+    public async Task<IActionResult> CadastroPaciente([FromBody] CadastrarPacienteDto cadastrarPacienteDto)
     {
         try
         {
             Paciente paciente = new Paciente(cadastrarPacienteDto);
             context.Pacientes.Add(paciente);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return Ok("Paciente cadastrado com sucesso!");
         }
         catch (Exception ex)
@@ -34,9 +34,9 @@ public class PacienteController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult ListarTodosPacientes()
+    public async Task<IActionResult> ListarTodosPacientes()
     {
-        List<Paciente> pegaPaciente = context.Pacientes.Include(x => x.Pessoa).ToList();
+        List<Paciente> pegaPaciente = await context.Pacientes.Include(x => x.Pessoa).ToListAsync();
         return Ok(pegaPaciente);
     }
 

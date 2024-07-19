@@ -1,4 +1,4 @@
-﻿using HospitalAPI.DTOs;
+﻿using HospitalAPI.DTOs.Entrada;
 using System.ComponentModel.DataAnnotations;
 
 namespace HospitalAPI.Modelos;

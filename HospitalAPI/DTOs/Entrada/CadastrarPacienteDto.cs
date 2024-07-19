@@ -1,10 +1,10 @@
 ﻿using HospitalAPI.Modelos;
 
-namespace HospitalAPI.DTOs;
+namespace HospitalAPI.DTOs.Entrada;
 
 public class CadastrarPacienteDto
 {
-   
+
     public float Peso { get; set; }
 
     public float Altura { get; set; }
@@ -17,9 +17,7 @@ public class CadastrarPacienteDto
 
     public string HistoricoFamiliar { get; set; } = string.Empty;
 
-    public bool TemConvenio { get; set; }
-
-    public int IdConvenio { get; }
+    public int? ConvenioId { get; }
 
     public string NomeCompleto { get; set; } = string.Empty;
 
@@ -31,6 +29,6 @@ public class CadastrarPacienteDto
 
     public DateTime DataNascimento { get; set; }
 
-    public int IdImagemDocumento { get; set; }
+    public IFormFile ImagemDocumento { get; set; }
 
 }

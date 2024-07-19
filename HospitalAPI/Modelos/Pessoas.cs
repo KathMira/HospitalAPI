@@ -8,7 +8,9 @@ public class Pessoas
     public int Telefone { get; set; }
     public string Endereco { get; set; } = string.Empty;
     public DateOnly DataNascimento { get; set; }
-    public int IdImagemDocumento { get; set; }
+    public int ImagemDocumentoId { get; set; }
+
+    public virtual Imagem ImagemDocumento { get; set; }
 
     public Pessoas() { }
     public Pessoas(string nomeCompleto, int cpf, DateOnly dataNascimento, int telefone, string endereco)

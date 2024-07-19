@@ -1,4 +1,4 @@
-﻿using HospitalAPI.DTOs;
+﻿using HospitalAPI.DTOs.Entrada;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.ConstrainedExecution;
@@ -25,8 +25,9 @@ public class Paciente
 
     public bool TemConvenio { get; set; }
 
-    public int IdConvenio { get; }
+    public int? ConvenioId { get; set; }
 
+    public virtual Convenio Convenio { get; set; }
     public virtual Pessoas Pessoa { get; set; }
 
     public Paciente() { }
@@ -40,8 +41,10 @@ public class Paciente
         TipoSanguineo = cadastrarPacienteDto.TipoSanguineo;
         Alergias = cadastrarPacienteDto.Alergias;
         HistoricoFamiliar = cadastrarPacienteDto.HistoricoFamiliar;
-        TemConvenio = cadastrarPacienteDto.TemConvenio;
-
+        ConvenioId = cadastrarPacienteDto.ConvenioId;
+        TemConvenio = false;
+        if (ConvenioId != null)
+            TemConvenio = true;
     }
     public void Atualizar(CadastrarPacienteDto cadastrarPacienteDto)
     {
@@ -52,6 +55,9 @@ public class Paciente
         TipoSanguineo = cadastrarPacienteDto.TipoSanguineo;
         Alergias = cadastrarPacienteDto.Alergias;
         HistoricoFamiliar = cadastrarPacienteDto.HistoricoFamiliar;
-        TemConvenio = cadastrarPacienteDto.TemConvenio;
+        ConvenioId = cadastrarPacienteDto.ConvenioId;
+        TemConvenio = false;
+        if (ConvenioId != null)
+            TemConvenio = true;
     }
 }

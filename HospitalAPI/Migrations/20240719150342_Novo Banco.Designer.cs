@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalAPI.Migrations
 {
     [DbContext(typeof(HospitalAPIContext))]
-    [Migration("20240712140401_Adicionando Consulta e exame")]
-    partial class AdicionandoConsultaeexame
+    [Migration("20240719150342_Novo Banco")]
+    partial class NovoBanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace HospitalAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("HospitalAPI.Modelos.Consultas", b =>
+            modelBuilder.Entity("HospitalAPI.Modelos.Consulta", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,16 +36,22 @@ namespace HospitalAPI.Migrations
                     b.Property<DateTime>("DataAgendamento")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataFim")
+                    b.Property<DateTime?>("DataFim")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataInicio")
+                    b.Property<DateTime?>("DataInicio")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("MedicoId")
                         .HasColumnType("int");
 
                     b.Property<int>("PacienteId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Retorno")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -55,6 +61,26 @@ namespace HospitalAPI.Migrations
                     b.HasIndex("PacienteId");
 
                     b.ToTable("Consultas");
+                });
+
+            modelBuilder.Entity("HospitalAPI.Modelos.Convenio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float>("Desconto")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Convenios");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Enfermeiro", b =>
@@ -86,10 +112,10 @@ namespace HospitalAPI.Migrations
                     b.Property<DateTime>("DataAgendamento")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataFim")
+                    b.Property<DateTime?>("DataFim")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataInicio")
+                    b.Property<DateTime?>("DataInicio")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("MedicoId")
@@ -151,6 +177,9 @@ namespace HospitalAPI.Migrations
                     b.Property<float>("Altura")
                         .HasColumnType("real");
 
+                    b.Property<int>("ConvenioId")
+                        .HasColumnType("int");
+
                     b.Property<string>("HistoricoFamiliar")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -168,6 +197,8 @@ namespace HospitalAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConvenioId");
 
                     b.HasIndex("PessoaId");
 
@@ -207,7 +238,7 @@ namespace HospitalAPI.Migrations
                     b.ToTable("Pessoas");
                 });
 
-            modelBuilder.Entity("HospitalAPI.Modelos.Consultas", b =>
+            modelBuilder.Entity("HospitalAPI.Modelos.Consulta", b =>
                 {
                     b.HasOne("HospitalAPI.Modelos.Medico", "Medico")
                         .WithMany()
@@ -269,11 +300,19 @@ namespace HospitalAPI.Migrations
 
             modelBuilder.Entity("HospitalAPI.Modelos.Paciente", b =>
                 {
+                    b.HasOne("HospitalAPI.Modelos.Convenio", "Convenio")
+                        .WithMany()
+                        .HasForeignKey("ConvenioId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("HospitalAPI.Modelos.Pessoas", "Pessoa")
                         .WithMany()
                         .HasForeignKey("PessoaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Convenio");
 
                     b.Navigation("Pessoa");
                 });

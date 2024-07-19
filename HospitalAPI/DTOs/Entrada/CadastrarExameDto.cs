@@ -1,4 +1,4 @@
-﻿namespace HospitalAPI.DTOs;
+﻿namespace HospitalAPI.DTOs.Entrada;
 
 public class CadastrarExameDto
 {
@@ -6,5 +6,5 @@ public class CadastrarExameDto
     public int MedicoId { get; }
     public int PacienteId { get; }
     public DateTime DataAgendamento { get; set; }
- 
+
 }

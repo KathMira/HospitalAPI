@@ -1,5 +1,5 @@
 ﻿using HospitalAPI.Banco;
-using HospitalAPI.DTOs;
+using HospitalAPI.DTOs.Entrada;
 using HospitalAPI.Modelos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +20,7 @@ public class ConsultaController : ControllerBase
     [HttpPost]
     public IActionResult CadastroConsulta([FromBody] AgendarConsultaDto cadastrarConsultaDto)
     {
-        Consultas consultas = new Consultas(cadastrarConsultaDto);
+        Consulta consultas = new Consulta(cadastrarConsultaDto);
         context.Consultas.Add(consultas);
         context.SaveChanges();
         return Ok("Consulta cadastrada com sucesso!");
@@ -29,7 +29,35 @@ public class ConsultaController : ControllerBase
     [HttpGet]
     public IActionResult VerTodasConsultas()
     {
-        List<Consultas> verconsultas = context.Consultas.ToList();
+        List<Consulta> verconsultas = context.Consultas.ToList();
         return Ok(verconsultas);
+    }
+
+    [HttpPut("Realizar/{id}")]
+    public IActionResult RealizaConsulta([FromRoute] int id, [FromBody] RealizarConsultaDto realizarConsultaDto)
+    {
+        Consulta consulta = context.Consultas.FirstOrDefault(x => x.Id == id);
+        if (consulta == null)
+        {
+            return BadRequest("Não encontrei fio");
+        }
+        consulta.Realizar(realizarConsultaDto);
+        context.SaveChanges();
+        return Ok("Consulta realizada e Retorno agendado com sucesso!");
+
+    }
+
+
+    [HttpPut("Cancelar/{id}")]
+    public IActionResult CancelaConsulta([FromRoute] int id)
+    {
+        Consulta consulta = context.Consultas.FirstOrDefault(x => x.Id == id);
+        if (consulta == null)
+        {
+            return BadRequest("Não encontrei fio");
+        }
+        consulta.Cancelar();
+        context.SaveChanges();
+        return Ok("Consulta cancelada");
     }
 }
