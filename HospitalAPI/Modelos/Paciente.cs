@@ -27,6 +27,8 @@ public class Paciente
 
     public int? ConvenioId { get; set; }
 
+
+
     public virtual Convenio Convenio { get; set; }
     public virtual Pessoas Pessoa { get; set; }
 

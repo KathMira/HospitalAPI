@@ -1,4 +1,5 @@
 using HospitalAPI.Banco;
+using HospitalAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IImagesServices, LocalDiscImageService>();
 
 builder.Services.AddDbContext<HospitalAPIContext>(options =>
 {
