@@ -82,7 +82,7 @@ public class EnfermeiroController : ControllerBase
     }
 
     [HttpPut("{Id}")]
-    public async Task<IActionResult> AtualizarEnfermeiro([FromRoute]int Id, [FromBody]CadastrarEnfermeiroDto cadastrarEnfermeiroDto)
+    public async Task<IActionResult> AtualizarEnfermeiro([FromRoute] int Id, [FromBody] CadastrarEnfermeiroDto cadastrarEnfermeiroDto)
     {
         Enfermeiro enfermeiro = _context.Enfermeiros.FirstOrDefault(x => x.Id == Id);
         if (enfermeiro == null)

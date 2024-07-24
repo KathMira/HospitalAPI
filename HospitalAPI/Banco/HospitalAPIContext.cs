@@ -27,8 +27,6 @@ public class HospitalAPIContext : DbContext
     public DbSet<Enfermeiro> Enfermeiros { get; set; }
     public DbSet<Consulta> Consultas { get; set; }
     public DbSet<Exame> Exames { get; set; }
-
     public DbSet<Convenio> Convenios { get; set; }
-
     public DbSet<Imagem> Imagens { get; set; }
 }

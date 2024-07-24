@@ -25,7 +25,7 @@ public class Consulta
         PacienteId = cadastrarConsultaDto.PacienteId;
         Retorno = false;
         Status = EnumStatusConsulta.Agendada;
-        
+
     }
     public Consulta(RealizarConsultaDto realizarConsultaDto, int PacienteId, int MedicoId)
     {
@@ -33,7 +33,7 @@ public class Consulta
         Status = EnumStatusConsulta.Agendada;
         Retorno = true;
         this.MedicoId = MedicoId;
-        this.PacienteId = PacienteId; 
+        this.PacienteId = PacienteId;
     }
 
     public void Realizar(RealizarConsultaDto realizarConsultaDto)

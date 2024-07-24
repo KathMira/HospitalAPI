@@ -8,7 +8,7 @@ public class Imagem
     public Guid NomeImagem { get; set; }
     public EnumTiposDocumentos TipoImagem { get; set; }
 
-    public Imagem( Guid nomeImagem, EnumTiposDocumentos tipoImagem)
+    public Imagem(Guid nomeImagem, EnumTiposDocumentos tipoImagem)
     {
         NomeImagem = nomeImagem;
         TipoImagem = tipoImagem;

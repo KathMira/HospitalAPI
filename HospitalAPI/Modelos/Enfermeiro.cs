@@ -15,7 +15,7 @@ public class Enfermeiro
     {
         Pessoa = new Pessoas
             (cadastrarEnfermeiroDto.NomeCompleto,
-            cadastrarEnfermeiroDto.CPF, 
+            cadastrarEnfermeiroDto.CPF,
             DateOnly.FromDateTime(cadastrarEnfermeiroDto.DataNascimento),
             cadastrarEnfermeiroDto.Telefone,
             cadastrarEnfermeiroDto.Endereco);
@@ -24,9 +24,9 @@ public class Enfermeiro
     public void Atualizar(CadastrarEnfermeiroDto cadastrarEnfermeiroDto)
     {
         Pessoa.Atualizar
-            (cadastrarEnfermeiroDto.NomeCompleto, 
-            cadastrarEnfermeiroDto.CPF, 
-            DateOnly.FromDateTime(cadastrarEnfermeiroDto.DataNascimento), 
+            (cadastrarEnfermeiroDto.NomeCompleto,
+            cadastrarEnfermeiroDto.CPF,
+            DateOnly.FromDateTime(cadastrarEnfermeiroDto.DataNascimento),
             cadastrarEnfermeiroDto.Telefone,
             cadastrarEnfermeiroDto.Endereco);
     }

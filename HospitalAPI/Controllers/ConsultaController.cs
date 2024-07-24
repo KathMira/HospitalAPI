@@ -49,7 +49,7 @@ public class ConsultaController : ControllerBase
 
 
     [HttpPut("Cancelar/{id}")]
-    public async Task<IActionResult>CancelaConsulta([FromRoute] int id)
+    public async Task<IActionResult> CancelaConsulta([FromRoute] int id)
     {
         Consulta consulta = _context.Consultas.FirstOrDefault(x => x.Id == id);
         if (consulta == null)

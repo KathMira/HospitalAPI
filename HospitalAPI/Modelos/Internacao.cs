@@ -11,6 +11,6 @@ public class Internacao
     public int IdLaudo { get; }
     public DateTime DataInternacao { get; set; }
     public int NumeroQuarto { get; set; }
-    public string TipoInternacao { get; set; }= string.Empty;
+    public string TipoInternacao { get; set; } = string.Empty;
     public int IdEnfermeiro { get; }
 }

@@ -50,10 +50,12 @@ public class PacienteController : ControllerBase
         Paciente paciente = await _context.Pacientes.Include(x => x.Pessoa)
             .Include(x => x.Pessoa.ImagemDocumento)
             .FirstOrDefaultAsync(x => x.Id == id);
+
         if (paciente == null)
         {
             return BadRequest("Não achei fio");
         }
+
         Stream imagem = _imagesServices.PegarImagem(paciente.Pessoa.ImagemDocumento.NomeImagem.ToString(),
             Enums.EnumTiposDocumentos.DocumentoIdentificacao);
         return File(imagem, "image/png");

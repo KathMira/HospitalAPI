@@ -23,7 +23,7 @@ public class Exame
         MedicoId = cadastrarExameDto.MedicoId;
         PacienteId = cadastrarExameDto.PacienteId;
         DataAgendamento = cadastrarExameDto.DataAgendamento;
-    
+
 
     }
 }

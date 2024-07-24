@@ -19,7 +19,7 @@ public class ConvenioController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CadastroConvenio (CadastrarConvenioDto cadastrarConvenioDto)
+    public async Task<IActionResult> CadastroConvenio(CadastrarConvenioDto cadastrarConvenioDto)
     {
         Convenio convenio = new Convenio(cadastrarConvenioDto);
         _context.Convenios.Add(convenio);

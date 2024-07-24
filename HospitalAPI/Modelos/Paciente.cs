@@ -58,7 +58,7 @@ public class Paciente
             (cadastrarPacienteDto.NomeCompleto,
             cadastrarPacienteDto.CPF,
             DateOnly.FromDateTime(cadastrarPacienteDto.DataNascimento),
-            cadastrarPacienteDto.Telefone, 
+            cadastrarPacienteDto.Telefone,
             cadastrarPacienteDto.Endereco);
 
         Peso = cadastrarPacienteDto.Peso;

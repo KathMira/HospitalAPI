@@ -16,7 +16,7 @@ public class MedicoController : ControllerBase
     public IImagesServices _imagesServices;
     public MedicoController(HospitalAPIContext context)
     {
-       _context = context;
+        _context = context;
     }
 
     [HttpPost]
