@@ -1,4 +1,5 @@
 ﻿using HospitalAPI.DTOs.Entrada;
+using HospitalAPI.Enums;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.ConstrainedExecution;
@@ -27,16 +28,19 @@ public class Paciente
 
     public int? ConvenioId { get; set; }
 
-
-
     public virtual Convenio Convenio { get; set; }
     public virtual Pessoas Pessoa { get; set; }
 
     public Paciente() { }
     public Paciente(CadastrarPacienteDto cadastrarPacienteDto)
     {
-        Pessoa = new Pessoas(cadastrarPacienteDto.NomeCompleto, cadastrarPacienteDto.CPF, DateOnly.FromDateTime(cadastrarPacienteDto.DataNascimento),
-            cadastrarPacienteDto.Telefone, cadastrarPacienteDto.Endereco);
+        Pessoa = new Pessoas
+            (cadastrarPacienteDto.NomeCompleto,
+            cadastrarPacienteDto.CPF,
+            DateOnly.FromDateTime(cadastrarPacienteDto.DataNascimento),
+            cadastrarPacienteDto.Telefone,
+            cadastrarPacienteDto.Endereco);
+
         Peso = cadastrarPacienteDto.Peso;
         Altura = cadastrarPacienteDto.Altura;
         Sexo = cadastrarPacienteDto.Sexo;
@@ -50,7 +54,13 @@ public class Paciente
     }
     public void Atualizar(CadastrarPacienteDto cadastrarPacienteDto)
     {
-        Pessoa.Atualizar(cadastrarPacienteDto.NomeCompleto, cadastrarPacienteDto.CPF, DateOnly.FromDateTime(cadastrarPacienteDto.DataNascimento), cadastrarPacienteDto.Telefone, cadastrarPacienteDto.Endereco);
+        Pessoa.Atualizar
+            (cadastrarPacienteDto.NomeCompleto,
+            cadastrarPacienteDto.CPF,
+            DateOnly.FromDateTime(cadastrarPacienteDto.DataNascimento),
+            cadastrarPacienteDto.Telefone, 
+            cadastrarPacienteDto.Endereco);
+
         Peso = cadastrarPacienteDto.Peso;
         Altura = cadastrarPacienteDto.Altura;
         Sexo = cadastrarPacienteDto.Sexo;

@@ -26,13 +26,13 @@ public class PacienteController : ControllerBase
     {
         try
         {
-            string nomeImagem = imagesServices.Salvar(cadastrarPacienteDto.ImagemDocumento.OpenReadStream(), 
+            string nomeImagem = imagesServices.Salvar(cadastrarPacienteDto.ImagemDocumento.OpenReadStream(),
                 Enums.EnumTiposDocumentos.DocumentoIdentificacao);
             Imagem imagem = new Imagem(Guid.Parse(nomeImagem), Enums.EnumTiposDocumentos.DocumentoIdentificacao);
             context.Imagens.Add(imagem);
-            
+
             Paciente paciente = new Paciente(cadastrarPacienteDto);
-            
+
             paciente.Pessoa.ImagemDocumento = imagem;
             context.Pacientes.Add(paciente);
             await context.SaveChangesAsync();
@@ -54,8 +54,8 @@ public class PacienteController : ControllerBase
         {
             return BadRequest("Não achei fio");
         }
-        Stream imagem = imagesServices.PegarImagem(paciente.Pessoa.ImagemDocumento.NomeImagem.ToString(), 
-            Enums.EnumTiposDocumentos.DocumentoIdentificacao); 
+        Stream imagem = imagesServices.PegarImagem(paciente.Pessoa.ImagemDocumento.NomeImagem.ToString(),
+            Enums.EnumTiposDocumentos.DocumentoIdentificacao);
         return File(imagem, "image/png");
     }
 
@@ -68,20 +68,20 @@ public class PacienteController : ControllerBase
     }
 
     [HttpDelete("{Id}")]
-    public IActionResult ApagarPaciente([FromRoute] int Id)
+    public async Task<IActionResult> ApagarPaciente([FromRoute] int Id)
     {
         Paciente paciente = context.Pacientes.FirstOrDefault(x => x.Id == Id);
         if (paciente == null)
         {
-            return NotFound("Não encontrei, burro");
+            return BadRequest("O Id informado não coincide com nenhum em nossa base de dados. Verifique e tente novamente!");
         }
         context.Pacientes.Remove(paciente);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return Ok("Paciente removido com sucesso!");
     }
 
     [HttpPut("{Id}")]
-    public IActionResult AtualizarPaciente([FromRoute] int Id, [FromBody] CadastrarPacienteDto cadastrarPacienteDto)
+    public async Task<IActionResult> AtualizarPaciente([FromRoute] int Id, [FromBody] CadastrarPacienteDto cadastrarPacienteDto)
     {
         Paciente paciente = context.Pacientes.Include(x => x.Pessoa).FirstOrDefault(x => x.Id == Id);
         if (paciente == null)
@@ -90,7 +90,7 @@ public class PacienteController : ControllerBase
         }
 
         paciente.Atualizar(cadastrarPacienteDto);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return Ok("Paciente atualizado com sucesso!");
     }
 }

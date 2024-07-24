@@ -4,7 +4,7 @@ namespace HospitalAPI.Modelos;
 
 public class Internacao
 {
-    public int IdInternacao { get; set; }
+    public int Id { get; set; }
     public int IdPaciente { get; }
     public int IdMedico { get; }
     public int IdExame { get; }

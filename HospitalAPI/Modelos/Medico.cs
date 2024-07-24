@@ -7,7 +7,7 @@ public class Medico
 
     public int PessoaId { get; set; }
     public int Id { get; set; }
-    public int CRM { get; set; }
+    public uint CRM { get; set; }
     public string Area { get; set; } = string.Empty;
     public virtual Pessoas Pessoa { get; set; }
 

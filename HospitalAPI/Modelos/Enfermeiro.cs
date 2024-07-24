@@ -5,17 +5,29 @@ namespace HospitalAPI.Modelos;
 
 public class Enfermeiro
 {
+    public int Id { get; set; }
     public int PessoaId { get; set; }
-    [Key]
-    public int IdEnfermeiro { get; set; }
-    public int IdSetor { get; }
+    public int SetorId { get; }
     public virtual Pessoas Pessoa { get; set; }
 
     public Enfermeiro() { }
-    public Enfermeiro(CadastrarPessoaDto cadastrarPessoaDto)
+    public Enfermeiro(CadastrarEnfermeiroDto cadastrarEnfermeiroDto)
     {
-        Pessoa = new Pessoas(cadastrarPessoaDto.NomeCompleto, cadastrarPessoaDto.CPF, DateOnly.FromDateTime(cadastrarPessoaDto.DataNascimento), cadastrarPessoaDto.Telefone,
-            cadastrarPessoaDto.Endereco);
+        Pessoa = new Pessoas
+            (cadastrarEnfermeiroDto.NomeCompleto,
+            cadastrarEnfermeiroDto.CPF, 
+            DateOnly.FromDateTime(cadastrarEnfermeiroDto.DataNascimento),
+            cadastrarEnfermeiroDto.Telefone,
+            cadastrarEnfermeiroDto.Endereco);
+    }
 
+    public void Atualizar(CadastrarEnfermeiroDto cadastrarEnfermeiroDto)
+    {
+        Pessoa.Atualizar
+            (cadastrarEnfermeiroDto.NomeCompleto, 
+            cadastrarEnfermeiroDto.CPF, 
+            DateOnly.FromDateTime(cadastrarEnfermeiroDto.DataNascimento), 
+            cadastrarEnfermeiroDto.Telefone,
+            cadastrarEnfermeiroDto.Endereco);
     }
 }
