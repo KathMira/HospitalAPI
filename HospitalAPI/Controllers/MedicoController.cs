@@ -12,11 +12,11 @@ namespace HospitalAPI.Controllers;
 [ApiController]
 public class MedicoController : ControllerBase
 {
-    private readonly HospitalAPIContext context;
-    public IImagesServices imagesServices { get; set; }
+    private readonly HospitalAPIContext _context;
+    public IImagesServices _imagesServices;
     public MedicoController(HospitalAPIContext context)
     {
-        this.context = context;
+       _context = context;
     }
 
     [HttpPost]
@@ -24,16 +24,16 @@ public class MedicoController : ControllerBase
     {
         try
         {
-            string nomeImagem = imagesServices.Salvar(cadastrarMedicoDto.ImagemDocumento.OpenReadStream(),
+            string nomeImagem = _imagesServices.Salvar(cadastrarMedicoDto.ImagemDocumento.OpenReadStream(),
                 Enums.EnumTiposDocumentos.DocumentoMedico);
 
             Imagem imagem = new Imagem(Guid.Parse(nomeImagem),
                 Enums.EnumTiposDocumentos.DocumentoMedico);
 
-            context.Imagens.Add(imagem);
+            _context.Imagens.Add(imagem);
             Medico medico = new Medico(cadastrarMedicoDto);
-            context.Medicos.Add(medico);
-            await context.SaveChangesAsync();
+            _context.Medicos.Add(medico);
+            await _context.SaveChangesAsync();
             return Ok("Médico cadastrado com sucesso!");
         }
         catch (Exception ex)
@@ -45,14 +45,14 @@ public class MedicoController : ControllerBase
     [HttpGet("{id}/crm")]
     public async Task<IActionResult> VerDcoumentoCRM([FromRoute] int id)
     {
-        Medico medico = await context.Medicos.Include(x => x.Pessoa)
+        Medico medico = await _context.Medicos.Include(x => x.Pessoa)
            .Include(x => x.Pessoa.ImagemDocumento)
            .FirstOrDefaultAsync(x => x.Id == id);
         if (medico == null)
         {
             return BadRequest("Não achei fio");
         }
-        Stream imagem = imagesServices.
+        Stream imagem = _imagesServices.
             PegarImagem(medico.Pessoa.ImagemDocumento.NomeImagem.ToString(),
            Enums.EnumTiposDocumentos.DocumentoMedico);
         return File(imagem, "image/png");
@@ -62,7 +62,7 @@ public class MedicoController : ControllerBase
     public async Task<IActionResult> VerTodosMedicos()
     {
 
-        List<Medico> medicos = await context.Medicos.ToListAsync();
+        List<Medico> medicos = await _context.Medicos.ToListAsync();
         return Ok(medicos);
     }
 

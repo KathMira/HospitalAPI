@@ -3,6 +3,7 @@ using HospitalAPI.DTOs.Entrada;
 using HospitalAPI.Modelos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalAPI.Controllers;
 
@@ -10,26 +11,26 @@ namespace HospitalAPI.Controllers;
 [ApiController]
 public class ExameController : ControllerBase
 {
-    public HospitalAPIContext context { get; set; }
+    public HospitalAPIContext _context;
 
     public ExameController(HospitalAPIContext context)
     {
-        this.context = context;
+        _context = context;
     }
 
     [HttpPost]
-    public IActionResult CadastroExame([FromBody] CadastrarExameDto cadastrarExameDto)
+    public async Task<IActionResult> CadastroExame([FromBody] CadastrarExameDto cadastrarExameDto)
     {
         Exame exame = new Exame(cadastrarExameDto);
-        context.Exames.Add(exame);
-        context.SaveChanges();
+        _context.Exames.Add(exame);
+        await _context.SaveChangesAsync();
         return Ok("Exame cadastrado com sucesso!");
     }
 
     [HttpGet]
-    public IActionResult VerTodosExames()
+    public async Task<IActionResult> VerTodosExames()
     {
-        List<Exame> vertodosexames = context.Exames.ToList();
+        List<Exame> vertodosexames = await _context.Exames.ToListAsync();
         return Ok(vertodosexames);
     }
 }

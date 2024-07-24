@@ -12,13 +12,13 @@ namespace HospitalAPI.Controllers;
 [ApiController]
 public class PacienteController : ControllerBase
 {
-    public HospitalAPIContext context { get; set; }
+    public HospitalAPIContext _context;
 
-    public IImagesServices imagesServices { get; set; }
+    public IImagesServices _imagesServices;
     public PacienteController(HospitalAPIContext context, IImagesServices imagesServices)
     {
-        this.context = context;
-        this.imagesServices = imagesServices;
+        _context = context;
+        _imagesServices = imagesServices;
     }
 
     [HttpPost]
@@ -26,16 +26,16 @@ public class PacienteController : ControllerBase
     {
         try
         {
-            string nomeImagem = imagesServices.Salvar(cadastrarPacienteDto.ImagemDocumento.OpenReadStream(),
+            string nomeImagem = _imagesServices.Salvar(cadastrarPacienteDto.ImagemDocumento.OpenReadStream(),
                 Enums.EnumTiposDocumentos.DocumentoIdentificacao);
             Imagem imagem = new Imagem(Guid.Parse(nomeImagem), Enums.EnumTiposDocumentos.DocumentoIdentificacao);
-            context.Imagens.Add(imagem);
+            _context.Imagens.Add(imagem);
 
             Paciente paciente = new Paciente(cadastrarPacienteDto);
 
             paciente.Pessoa.ImagemDocumento = imagem;
-            context.Pacientes.Add(paciente);
-            await context.SaveChangesAsync();
+            _context.Pacientes.Add(paciente);
+            await _context.SaveChangesAsync();
             return Ok("Paciente cadastrado com sucesso!");
         }
         catch (Exception ex)
@@ -47,14 +47,14 @@ public class PacienteController : ControllerBase
     [HttpGet("{id}/documento")]
     public async Task<IActionResult> PegarImagem([FromRoute] int id)
     {
-        Paciente paciente = await context.Pacientes.Include(x => x.Pessoa)
+        Paciente paciente = await _context.Pacientes.Include(x => x.Pessoa)
             .Include(x => x.Pessoa.ImagemDocumento)
             .FirstOrDefaultAsync(x => x.Id == id);
         if (paciente == null)
         {
             return BadRequest("Não achei fio");
         }
-        Stream imagem = imagesServices.PegarImagem(paciente.Pessoa.ImagemDocumento.NomeImagem.ToString(),
+        Stream imagem = _imagesServices.PegarImagem(paciente.Pessoa.ImagemDocumento.NomeImagem.ToString(),
             Enums.EnumTiposDocumentos.DocumentoIdentificacao);
         return File(imagem, "image/png");
     }
@@ -63,34 +63,34 @@ public class PacienteController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> ListarTodosPacientes()
     {
-        List<Paciente> pegaPaciente = await context.Pacientes.Include(x => x.Pessoa).ToListAsync();
+        List<Paciente> pegaPaciente = await _context.Pacientes.Include(x => x.Pessoa).ToListAsync();
         return Ok(pegaPaciente);
     }
 
     [HttpDelete("{Id}")]
     public async Task<IActionResult> ApagarPaciente([FromRoute] int Id)
     {
-        Paciente paciente = context.Pacientes.FirstOrDefault(x => x.Id == Id);
+        Paciente paciente = _context.Pacientes.FirstOrDefault(x => x.Id == Id);
         if (paciente == null)
         {
             return BadRequest("O Id informado não coincide com nenhum em nossa base de dados. Verifique e tente novamente!");
         }
-        context.Pacientes.Remove(paciente);
-        await context.SaveChangesAsync();
+        _context.Pacientes.Remove(paciente);
+        await _context.SaveChangesAsync();
         return Ok("Paciente removido com sucesso!");
     }
 
     [HttpPut("{Id}")]
     public async Task<IActionResult> AtualizarPaciente([FromRoute] int Id, [FromBody] CadastrarPacienteDto cadastrarPacienteDto)
     {
-        Paciente paciente = context.Pacientes.Include(x => x.Pessoa).FirstOrDefault(x => x.Id == Id);
+        Paciente paciente = _context.Pacientes.Include(x => x.Pessoa).FirstOrDefault(x => x.Id == Id);
         if (paciente == null)
         {
             return BadRequest("Id não existe");
         }
 
         paciente.Atualizar(cadastrarPacienteDto);
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
         return Ok("Paciente atualizado com sucesso!");
     }
 }

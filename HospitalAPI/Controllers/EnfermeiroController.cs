@@ -12,13 +12,13 @@ namespace HospitalAPI.Controllers;
 [ApiController]
 public class EnfermeiroController : ControllerBase
 {
-    public IImagesServices imagesServices { get; set; }
-    private readonly HospitalAPIContext context;
+    public IImagesServices _imagesServices;
+    private readonly HospitalAPIContext _context;
 
     public EnfermeiroController(HospitalAPIContext context, IImagesServices imagesServices)
     {
-        this.context = context;
-        this.imagesServices = imagesServices;
+        _context = context;
+        _imagesServices = imagesServices;
     }
 
     [HttpPost]
@@ -26,17 +26,17 @@ public class EnfermeiroController : ControllerBase
     {
         try
         {
-            string nomeImagem = imagesServices.Salvar(cadastrarEnfermeiroDto.ImagemDocumento.OpenReadStream(),
+            string nomeImagem = _imagesServices.Salvar(cadastrarEnfermeiroDto.ImagemDocumento.OpenReadStream(),
                 Enums.EnumTiposDocumentos.DocumentoIdentificacao);
             Imagem imagem = new Imagem(Guid.Parse(nomeImagem),
                 Enums.EnumTiposDocumentos.DocumentoIdentificacao);
-            context.Imagens.Add(imagem);
+            _context.Imagens.Add(imagem);
 
 
             Enfermeiro enfermeiro = new Enfermeiro(cadastrarEnfermeiroDto);
             enfermeiro.Pessoa.ImagemDocumento = imagem;
-            context.Enfermeiros.Add(enfermeiro);
-            await context.SaveChangesAsync();
+            _context.Enfermeiros.Add(enfermeiro);
+            await _context.SaveChangesAsync();
             return Ok("Enfermeiro cadastrado com sucesso!");
 
         }
@@ -49,14 +49,14 @@ public class EnfermeiroController : ControllerBase
     [HttpGet("{id}/documento")]
     public async Task<IActionResult> verDocumento([FromRoute] int id)
     {
-        Enfermeiro enfermeiro = await context.Enfermeiros.Include(x => x.Pessoa)
+        Enfermeiro enfermeiro = await _context.Enfermeiros.Include(x => x.Pessoa)
             .Include(x => x.Pessoa.ImagemDocumento)
             .FirstOrDefaultAsync(x => x.Id == id);
         if (enfermeiro == null)
         {
             return BadRequest("Não achei fio");
         }
-        Stream imagem = imagesServices.PegarImagem(enfermeiro.Pessoa.ImagemDocumento.NomeImagem.ToString(),
+        Stream imagem = _imagesServices.PegarImagem(enfermeiro.Pessoa.ImagemDocumento.NomeImagem.ToString(),
             Enums.EnumTiposDocumentos.DocumentoIdentificacao);
         return File(imagem, "image/png");
     }
@@ -64,33 +64,33 @@ public class EnfermeiroController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> ListarTodosEnfermeiros()
     {
-        List<Enfermeiro> verEnfermeiros = await context.Enfermeiros.ToListAsync();
+        List<Enfermeiro> verEnfermeiros = await _context.Enfermeiros.ToListAsync();
         return Ok(verEnfermeiros);
     }
 
     [HttpDelete("{Id}")]
     public async Task<IActionResult> ApagarEnfermeiro([FromRoute] int Id)
     {
-        Enfermeiro enfermeiro = context.Enfermeiros.FirstOrDefault(x => x.Id == Id);
+        Enfermeiro enfermeiro = _context.Enfermeiros.FirstOrDefault(x => x.Id == Id);
         if (enfermeiro == null)
         {
             return BadRequest("O Id informado não coincide com nenhum em nossa base de dados. Verifique e tente novamente!");
         }
-        context.Enfermeiros.Remove(enfermeiro);
-        await context.SaveChangesAsync();
+        _context.Enfermeiros.Remove(enfermeiro);
+        await _context.SaveChangesAsync();
         return Ok("Enfermeiro removido com sucesso!");
     }
 
     [HttpPut("{Id}")]
     public async Task<IActionResult> AtualizarEnfermeiro([FromRoute]int Id, [FromBody]CadastrarEnfermeiroDto cadastrarEnfermeiroDto)
     {
-        Enfermeiro enfermeiro = context.Enfermeiros.FirstOrDefault(x => x.Id == Id);
+        Enfermeiro enfermeiro = _context.Enfermeiros.FirstOrDefault(x => x.Id == Id);
         if (enfermeiro == null)
         {
             return BadRequest("O Id informado não coincide com nenhum em nossa base de dados. Verifique e tente novamente!");
         }
         enfermeiro.Atualizar(cadastrarEnfermeiroDto);
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
         return Ok("Enfermeiro atualizado com sucesso!");
     }
 }

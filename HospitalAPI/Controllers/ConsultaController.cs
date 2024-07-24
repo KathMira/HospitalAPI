@@ -11,53 +11,53 @@ namespace HospitalAPI.Controllers;
 [ApiController]
 public class ConsultaController : ControllerBase
 {
-    public HospitalAPIContext context { get; set; }
+    public HospitalAPIContext _context;
     public ConsultaController(HospitalAPIContext context)
     {
-        this.context = context;
+        _context = context;
     }
 
     [HttpPost]
-    public IActionResult CadastroConsulta([FromBody] AgendarConsultaDto cadastrarConsultaDto)
+    public async Task<IActionResult> CadastroConsulta([FromBody] AgendarConsultaDto cadastrarConsultaDto)
     {
         Consulta consultas = new Consulta(cadastrarConsultaDto);
-        context.Consultas.Add(consultas);
-        context.SaveChanges();
+        _context.Consultas.Add(consultas);
+        await _context.SaveChangesAsync();
         return Ok("Consulta cadastrada com sucesso!");
     }
 
     [HttpGet]
-    public IActionResult VerTodasConsultas()
+    public async Task<IActionResult> VerTodasConsultas()
     {
-        List<Consulta> verconsultas = context.Consultas.ToList();
+        List<Consulta> verconsultas = await _context.Consultas.ToListAsync();
         return Ok(verconsultas);
     }
 
     [HttpPut("Realizar/{id}")]
-    public IActionResult RealizaConsulta([FromRoute] int id, [FromBody] RealizarConsultaDto realizarConsultaDto)
+    public async Task<IActionResult> RealizaConsulta([FromRoute] int id, [FromBody] RealizarConsultaDto realizarConsultaDto)
     {
-        Consulta consulta = context.Consultas.FirstOrDefault(x => x.Id == id);
+        Consulta consulta = _context.Consultas.FirstOrDefault(x => x.Id == id);
         if (consulta == null)
         {
             return BadRequest("Não encontrei fio");
         }
         consulta.Realizar(realizarConsultaDto);
-        context.SaveChanges();
+        await _context.SaveChangesAsync();
         return Ok("Consulta realizada e Retorno agendado com sucesso!");
 
     }
 
 
     [HttpPut("Cancelar/{id}")]
-    public IActionResult CancelaConsulta([FromRoute] int id)
+    public async Task<IActionResult>CancelaConsulta([FromRoute] int id)
     {
-        Consulta consulta = context.Consultas.FirstOrDefault(x => x.Id == id);
+        Consulta consulta = _context.Consultas.FirstOrDefault(x => x.Id == id);
         if (consulta == null)
         {
             return BadRequest("Não encontrei fio");
         }
         consulta.Cancelar();
-        context.SaveChanges();
+        await _context.SaveChangesAsync();
         return Ok("Consulta cancelada");
     }
 }

@@ -10,23 +10,23 @@ namespace HospitalAPI.Controllers;
 [ApiController]
 public class RetornoController : ControllerBase
 {
-    public HospitalAPIContext context { get; set; }
+    public HospitalAPIContext _context;
     public RetornoController(HospitalAPIContext context)
     {
-        this.context = context;
+        _context = context;
     }
 
     [HttpPost]
-    public IActionResult AgendaRetorno([FromBody] AgendarRetornoDto agendarRetornoDto)
+    public async Task<IActionResult> AgendaRetorno([FromBody] AgendarRetornoDto agendarRetornoDto)
     {
-        Consulta consulta = context.Consultas.FirstOrDefault(x => x.Id == agendarRetornoDto.ConsultaId);
+        Consulta consulta = _context.Consultas.FirstOrDefault(x => x.Id == agendarRetornoDto.ConsultaId);
         if (consulta == null)
         {
             return BadRequest("Não achei fio");
         }
         Consulta retorno = consulta.AgendarRetorno(agendarRetornoDto);
-        context.Consultas.Add(retorno);
-        context.SaveChanges();
+        _context.Consultas.Add(retorno);
+        await _context.SaveChangesAsync();
         return Ok("Retorno Agendado com sucesso!");
     }
 
