@@ -18,6 +18,7 @@ public class HospitalAPIContext : DbContext
         builder.ApplyConfiguration(new PacienteMap());
         builder.ApplyConfiguration(new ConsultaMap());
         builder.ApplyConfiguration(new ExameMap());
+        builder.ApplyConfiguration(new EnfermeiroMap());
     }
 
 

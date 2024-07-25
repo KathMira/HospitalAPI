@@ -51,7 +51,7 @@ namespace HospitalAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PessoaId = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table =>
+                constraints: table =>   
                 {
                     table.PrimaryKey("PK_Enfermeiros", x => x.IdEnfermeiro);
                     table.ForeignKey(

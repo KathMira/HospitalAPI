@@ -33,6 +33,19 @@ public class ConsultaController : ControllerBase
         return Ok(verconsultas);
     }
 
+    [HttpPut("RealizarPagamento/{id}")]
+    public async Task<IActionResult> RealizaPagamento([FromRoute] int id)
+    {
+        Consulta consulta = _context.Consultas.FirstOrDefault(consulta => consulta.Id == id);
+        if (consulta == null)
+        {
+            return BadRequest("Não achei fio");
+        }
+        consulta.RealizarPagamento();
+        await _context.SaveChangesAsync();
+        return Ok("Pagamento Realizado");
+    }
+
     [HttpPut("Realizar/{id}")]
     public async Task<IActionResult> RealizaConsulta([FromRoute] int id, [FromBody] RealizarConsultaDto realizarConsultaDto)
     {

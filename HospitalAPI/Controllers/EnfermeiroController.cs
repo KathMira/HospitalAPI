@@ -51,7 +51,7 @@ public class EnfermeiroController : ControllerBase
     {
         Enfermeiro enfermeiro = await _context.Enfermeiros.Include(x => x.Pessoa)
             .Include(x => x.Pessoa.ImagemDocumento)
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.IdEnfermeiro == id);
         if (enfermeiro == null)
         {
             return BadRequest("Não achei fio");
@@ -71,7 +71,7 @@ public class EnfermeiroController : ControllerBase
     [HttpDelete("{Id}")]
     public async Task<IActionResult> ApagarEnfermeiro([FromRoute] int Id)
     {
-        Enfermeiro enfermeiro = _context.Enfermeiros.FirstOrDefault(x => x.Id == Id);
+        Enfermeiro enfermeiro = _context.Enfermeiros.FirstOrDefault(x => x.IdEnfermeiro == Id);
         if (enfermeiro == null)
         {
             return BadRequest("O Id informado não coincide com nenhum em nossa base de dados. Verifique e tente novamente!");
@@ -84,7 +84,7 @@ public class EnfermeiroController : ControllerBase
     [HttpPut("{Id}")]
     public async Task<IActionResult> AtualizarEnfermeiro([FromRoute] int Id, [FromBody] CadastrarEnfermeiroDto cadastrarEnfermeiroDto)
     {
-        Enfermeiro enfermeiro = _context.Enfermeiros.FirstOrDefault(x => x.Id == Id);
+        Enfermeiro enfermeiro = _context.Enfermeiros.FirstOrDefault(x => x.IdEnfermeiro == Id);
         if (enfermeiro == null)
         {
             return BadRequest("O Id informado não coincide com nenhum em nossa base de dados. Verifique e tente novamente!");

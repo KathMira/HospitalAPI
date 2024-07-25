@@ -14,25 +14,30 @@ public class MedicoController : ControllerBase
 {
     private readonly HospitalAPIContext _context;
     public IImagesServices _imagesServices;
-    public MedicoController(HospitalAPIContext context)
+    public MedicoController(HospitalAPIContext context, IImagesServices imagesServices)
     {
         _context = context;
+        _imagesServices = imagesServices;
     }
 
     [HttpPost]
-    public async Task<IActionResult> CadastrarMedico([FromBody] CadastrarMedicoDto cadastrarMedicoDto)
+    public async Task<IActionResult> CadastrarMedico([FromForm] CadastrarMedicoDto cadastrarMedicoDto)
     {
+
         try
         {
             string nomeImagem = _imagesServices.Salvar(cadastrarMedicoDto.ImagemDocumento.OpenReadStream(),
-                Enums.EnumTiposDocumentos.DocumentoMedico);
+    Enums.EnumTiposDocumentos.DocumentoMedico);
 
             Imagem imagem = new Imagem(Guid.Parse(nomeImagem),
                 Enums.EnumTiposDocumentos.DocumentoMedico);
 
             _context.Imagens.Add(imagem);
+
             Medico medico = new Medico(cadastrarMedicoDto);
+            medico.Pessoa.ImagemDocumento = imagem;
             _context.Medicos.Add(medico);
+            
             await _context.SaveChangesAsync();
             return Ok("Médico cadastrado com sucesso!");
         }

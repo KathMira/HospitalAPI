@@ -5,7 +5,8 @@ namespace HospitalAPI.Modelos;
 
 public class Enfermeiro
 {
-    public int Id { get; set; }
+
+    public int IdEnfermeiro { get; set; }
     public int PessoaId { get; set; }
     public int SetorId { get; }
     public virtual Pessoas Pessoa { get; set; }
@@ -19,7 +20,7 @@ public class Enfermeiro
             DateOnly.FromDateTime(cadastrarEnfermeiroDto.DataNascimento),
             cadastrarEnfermeiroDto.Telefone,
             cadastrarEnfermeiroDto.Endereco);
-    }
+    }   
 
     public void Atualizar(CadastrarEnfermeiroDto cadastrarEnfermeiroDto)
     {
