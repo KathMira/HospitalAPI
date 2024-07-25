@@ -21,9 +21,9 @@ public class CadastrarPacienteDto
 
     public string NomeCompleto { get; set; } = string.Empty;
 
-    public uint CPF { get; set; }
+    public int CPF { get; set; }
 
-    public uint Telefone { get; set; }
+    public int Telefone { get; set; }
 
     public string Endereco { get; set; } = string.Empty;
 
