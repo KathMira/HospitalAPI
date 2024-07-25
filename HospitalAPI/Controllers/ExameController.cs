@@ -33,4 +33,5 @@ public class ExameController : ControllerBase
         List<Exame> vertodosexames = await _context.Exames.ToListAsync();
         return Ok(vertodosexames);
     }
+    //add put e delete
 }

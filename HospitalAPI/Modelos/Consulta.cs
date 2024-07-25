@@ -16,6 +16,8 @@ public class Consulta
     public EnumStatusConsulta Status { get; set; }
     public bool Retorno { get; set; }
 
+    public bool Pago { get; set; }
+
 
     public Consulta() { }
     public Consulta(AgendarConsultaDto cadastrarConsultaDto)
@@ -24,6 +26,7 @@ public class Consulta
         MedicoId = cadastrarConsultaDto.MedicoId;
         PacienteId = cadastrarConsultaDto.PacienteId;
         Retorno = false;
+        Pago = false;
         Status = EnumStatusConsulta.Agendada;
 
     }
@@ -35,7 +38,7 @@ public class Consulta
         this.MedicoId = MedicoId;
         this.PacienteId = PacienteId;
     }
-
+    
     public void Realizar(RealizarConsultaDto realizarConsultaDto)
     {
         DataInicio = realizarConsultaDto.DataInicio;

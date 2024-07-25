@@ -8,6 +8,6 @@ public interface IImagesServices
 {
     string Salvar(Stream imageStream, EnumTiposDocumentos tipo);
     Stream PegarImagem(string nome, EnumTiposDocumentos tipo);
-    string Salvar(Func<CadastrarPessoaDto, Task<IActionResult>> cadastrarEnfermeiro);
+   
 }
 

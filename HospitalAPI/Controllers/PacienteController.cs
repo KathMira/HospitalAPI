@@ -47,7 +47,7 @@ public class PacienteController : ControllerBase
     [HttpGet("{id}/documento")]
     public async Task<IActionResult> PegarImagem([FromRoute] int id)
     {
-        Paciente paciente = await _context.Pacientes.Include(x => x.Pessoa)
+        Paciente? paciente = await _context.Pacientes.Include(x => x.Pessoa)
             .Include(x => x.Pessoa.ImagemDocumento)
             .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -65,14 +65,14 @@ public class PacienteController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> ListarTodosPacientes()
     {
-        List<Paciente> pegaPaciente = await _context.Pacientes.Include(x => x.Pessoa).ToListAsync();
+        var pegaPaciente = await _context.Pacientes.Include(x => x.Pessoa).ToListAsync();
         return Ok(pegaPaciente);
     }
 
     [HttpDelete("{Id}")]
     public async Task<IActionResult> ApagarPaciente([FromRoute] int Id)
     {
-        Paciente paciente = _context.Pacientes.FirstOrDefault(x => x.Id == Id);
+        Paciente? paciente = _context.Pacientes.FirstOrDefault(x => x.Id == Id);
         if (paciente == null)
         {
             return BadRequest("O Id informado não coincide com nenhum em nossa base de dados. Verifique e tente novamente!");
@@ -85,7 +85,7 @@ public class PacienteController : ControllerBase
     [HttpPut("{Id}")]
     public async Task<IActionResult> AtualizarPaciente([FromRoute] int Id, [FromBody] CadastrarPacienteDto cadastrarPacienteDto)
     {
-        Paciente paciente = _context.Pacientes.Include(x => x.Pessoa).FirstOrDefault(x => x.Id == Id);
+        Paciente? paciente = _context.Pacientes.Include(x => x.Pessoa).FirstOrDefault(x => x.Id == Id);
         if (paciente == null)
         {
             return BadRequest("Id não existe");

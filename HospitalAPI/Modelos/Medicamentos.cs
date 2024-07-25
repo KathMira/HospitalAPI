@@ -2,10 +2,10 @@
 
 public class Medicamentos
 {
-    public int IdMedicamento { get; set; }
+    public int Id { get; set; }
     public string NomeMedicamento { get; set; } = string.Empty;
-    public int idPaciente { get; }
-    public int IdMedico { get; }
+    public int PacienteId { get; set; }
+    public int MedicoId { get; set; }
 
 
 }

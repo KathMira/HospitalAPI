@@ -36,7 +36,7 @@ public class ConsultaController : ControllerBase
     [HttpPut("Realizar/{id}")]
     public async Task<IActionResult> RealizaConsulta([FromRoute] int id, [FromBody] RealizarConsultaDto realizarConsultaDto)
     {
-        Consulta consulta = _context.Consultas.FirstOrDefault(x => x.Id == id);
+        Consulta? consulta = _context.Consultas.FirstOrDefault(x => x.Id == id);
         if (consulta == null)
         {
             return BadRequest("Não encontrei fio");
@@ -51,7 +51,7 @@ public class ConsultaController : ControllerBase
     [HttpPut("Cancelar/{id}")]
     public async Task<IActionResult> CancelaConsulta([FromRoute] int id)
     {
-        Consulta consulta = _context.Consultas.FirstOrDefault(x => x.Id == id);
+        Consulta? consulta = _context.Consultas.FirstOrDefault(x => x.Id == id);
         if (consulta == null)
         {
             return BadRequest("Não encontrei fio");

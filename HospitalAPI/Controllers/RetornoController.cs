@@ -19,7 +19,7 @@ public class RetornoController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AgendaRetorno([FromBody] AgendarRetornoDto agendarRetornoDto)
     {
-        Consulta consulta = _context.Consultas.FirstOrDefault(x => x.Id == agendarRetornoDto.ConsultaId);
+        Consulta? consulta = _context.Consultas.FirstOrDefault(x => x.Id == agendarRetornoDto.ConsultaId);
         if (consulta == null)
         {
             return BadRequest("Não achei fio");
@@ -30,4 +30,5 @@ public class RetornoController : ControllerBase
         return Ok("Retorno Agendado com sucesso!");
     }
 
+    //add put, get, delete
 }

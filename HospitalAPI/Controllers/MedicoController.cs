@@ -65,5 +65,5 @@ public class MedicoController : ControllerBase
         List<Medico> medicos = await _context.Medicos.ToListAsync();
         return Ok(medicos);
     }
-
+    // add put e delete
 }

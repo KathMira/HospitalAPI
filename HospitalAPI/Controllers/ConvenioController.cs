@@ -34,4 +34,5 @@ public class ConvenioController : ControllerBase
         return Ok(convenios);
     }
 
+    //adicionar put e delete
 }
