@@ -4,6 +4,7 @@ using HospitalAPI.Banco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalAPI.Migrations
 {
     [DbContext(typeof(HospitalAPIContext))]
-    partial class HospitalAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20240725184551_Adicionando Laudo")]
+    partial class AdicionandoLaudo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,6 +168,7 @@ namespace HospitalAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ConsultaId")
@@ -197,7 +201,7 @@ namespace HospitalAPI.Migrations
                     b.HasIndex("ExameId")
                         .IsUnique();
 
-                    b.ToTable("Laudos");
+                    b.ToTable("Laudo");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Medico", b =>
