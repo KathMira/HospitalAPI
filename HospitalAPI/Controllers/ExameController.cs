@@ -33,5 +33,17 @@ public class ExameController : ControllerBase
         List<Exame> vertodosexames = await _context.Exames.ToListAsync();
         return Ok(vertodosexames);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> VerExamePorId([FromRoute] int id)
+    {
+        Exame? exame = await _context.Exames.FirstOrDefaultAsync(x => x.Id == id);
+        if (exame == null)
+        {
+            return BadRequest("Não achei fio");
+        }
+        return Ok(exame);
+        
+    }
     //add put e delete
 }

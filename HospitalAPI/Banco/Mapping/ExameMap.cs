@@ -10,6 +10,6 @@ public class ExameMap : IEntityTypeConfiguration<Exame>
     {
         builder.HasOne(x => x.Paciente).WithMany().OnDelete(DeleteBehavior.NoAction);
         builder.HasOne(x => x.Medico).WithMany().OnDelete(DeleteBehavior.NoAction);
-
+        builder.HasOne(x => x.Laudo).WithOne().HasForeignKey<Laudo>(x => x.ExameId).OnDelete(DeleteBehavior.NoAction);
     }
 }

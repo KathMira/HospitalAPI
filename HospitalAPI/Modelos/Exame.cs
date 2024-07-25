@@ -12,6 +12,7 @@ public class Exame
     public DateTime? DataInicio { get; set; }
     public DateTime? DataFim { get; set; }
 
+    public virtual Laudo Laudo { get; set; }
     public virtual Paciente Paciente { get; set; }
     public virtual Medico Medico { get; set; }
 
