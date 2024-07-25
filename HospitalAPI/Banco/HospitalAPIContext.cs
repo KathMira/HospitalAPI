@@ -30,4 +30,5 @@ public class HospitalAPIContext : DbContext
     public DbSet<Exame> Exames { get; set; }
     public DbSet<Convenio> Convenios { get; set; }
     public DbSet<Imagem> Imagens { get; set; }
+    public DbSet<Laudo> Laudos { get; set; }
 }

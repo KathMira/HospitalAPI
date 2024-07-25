@@ -12,8 +12,10 @@ public class Consulta
     public DateTime DataAgendamento { get; set; }
     public int MedicoId { get; set; }
     public int PacienteId { get; set; }
+    
     public virtual Medico Medico { get; set; }
     public virtual Paciente Paciente { get; set; }
+    public virtual List<Laudo> Laudos { get; set; }
     public EnumStatusConsulta Status { get; set; }
     public bool Retorno { get; set; }
 
@@ -40,7 +42,7 @@ public class Consulta
         this.MedicoId = MedicoId;
         this.PacienteId = PacienteId;
     }
-    
+
     public void RealizarPagamento()
     {
         Pago = true;

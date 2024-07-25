@@ -12,7 +12,6 @@ public class ConsultaMap : IEntityTypeConfiguration<Consulta>
 
         builder.HasOne(x => x.Paciente).WithMany().OnDelete(DeleteBehavior.NoAction);
         builder.HasOne(x => x.Medico).WithMany().OnDelete(DeleteBehavior.NoAction);
-
-
+        builder.HasMany(x => x.Laudos).WithOne().HasForeignKey(x => x.ConsultaId).OnDelete(DeleteBehavior.NoAction);
     }
 }
