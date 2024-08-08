@@ -4,6 +4,7 @@ using HospitalAPI.Banco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalAPI.Migrations
 {
     [DbContext(typeof(HospitalAPIContext))]
-    partial class HospitalAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20240729195524_Adicionando Medicamento")]
+    partial class AdicionandoMedicamento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,12 +129,6 @@ namespace HospitalAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PacienteId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Pago")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
