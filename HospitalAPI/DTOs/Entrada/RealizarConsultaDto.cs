@@ -1,6 +1,6 @@
 ﻿namespace HospitalAPI.DTOs.Entrada;
 
-public class RealizarConsultaDto
+public class RealizarConsultaExameDto
 {
     public DateTime DataInicio { get; set; }
     public DateTime DataFim { get; set;}
