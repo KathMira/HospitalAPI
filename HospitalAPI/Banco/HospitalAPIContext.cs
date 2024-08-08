@@ -19,6 +19,8 @@ public class HospitalAPIContext : DbContext
         builder.ApplyConfiguration(new ConsultaMap());
         builder.ApplyConfiguration(new ExameMap());
         builder.ApplyConfiguration(new EnfermeiroMap());
+        builder.ApplyConfiguration(new MedicamentoMap());
+        
     }
 
 
@@ -31,4 +33,5 @@ public class HospitalAPIContext : DbContext
     public DbSet<Convenio> Convenios { get; set; }
     public DbSet<Imagem> Imagens { get; set; }
     public DbSet<Laudo> Laudos { get; set; }
+    public DbSet<Medicamentos> Medicamentos { get; set; }
 }

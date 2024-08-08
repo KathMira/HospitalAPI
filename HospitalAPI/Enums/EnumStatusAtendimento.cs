@@ -1,6 +1,6 @@
 ﻿namespace HospitalAPI.Enums;
 
-public enum EnumStatusConsulta
+public enum EnumStatusAtendimento
 {
     Agendada,
     Cancelada,

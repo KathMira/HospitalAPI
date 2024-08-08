@@ -1,6 +1,5 @@
 ﻿using HospitalAPI.Banco;
 using HospitalAPI.DTOs.Entrada;
-using HospitalAPI.DTOs.Saida;
 using HospitalAPI.Enums;
 using HospitalAPI.Modelos;
 using HospitalAPI.Services;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using HospitalAPI.DTOs.Saida;
 
 namespace HospitalAPI.Controllers;
 

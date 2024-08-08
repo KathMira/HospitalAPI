@@ -1,6 +1,5 @@
 ﻿using HospitalAPI.Banco;
 using HospitalAPI.DTOs.Entrada;
-using HospitalAPI.DTOs.Saida;
 using HospitalAPI.Modelos;
 using HospitalAPI.Services;
 using Microsoft.AspNetCore.Http;
