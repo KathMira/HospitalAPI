@@ -16,7 +16,8 @@ public class Consulta
     public virtual Medico Medico { get; set; }
     public virtual Paciente Paciente { get; set; }
     public virtual List<Laudo> Laudos { get; set; }
-    public EnumStatusConsulta Status { get; set; }
+
+    public EnumStatusAtendimento Status { get; set; }
     public bool Retorno { get; set; }
 
     public bool Pago { get; set; }
@@ -30,14 +31,14 @@ public class Consulta
         PacienteId = cadastrarConsultaDto.PacienteId;
         Retorno = false;
         Pago = false;
-        Status = EnumStatusConsulta.Agendada;
+        Status = EnumStatusAtendimento.Agendada;
 
     }
 
-    public Consulta(RealizarConsultaDto realizarConsultaDto, int PacienteId, int MedicoId)
+    public Consulta(RealizarConsultaExameDto realizarConsultaDto, int PacienteId, int MedicoId)
     {
         DataAgendamento = realizarConsultaDto.DataFim.AddDays(7);
-        Status = EnumStatusConsulta.Agendada;
+        Status = EnumStatusAtendimento.Agendada;
         Retorno = true;
         this.MedicoId = MedicoId;
         this.PacienteId = PacienteId;
@@ -47,23 +48,23 @@ public class Consulta
     {
         Pago = true;
     }
-    public void Realizar(RealizarConsultaDto realizarConsultaDto)
+    public void Realizar(RealizarConsultaExameDto realizarConsultaDto)
     {
         DataInicio = realizarConsultaDto.DataInicio;
         DataFim = realizarConsultaDto.DataFim;
-        Status = EnumStatusConsulta.Concluida;
+        Status = EnumStatusAtendimento.Concluida;
     }
 
     public void Cancelar()
     {
-        Status = EnumStatusConsulta.Cancelada;
+        Status = EnumStatusAtendimento.Cancelada;
     }
 
     public Consulta AgendarRetorno(AgendarRetornoDto agendarRetornoDto)
     {
         Consulta retorno = new Consulta();
         retorno.DataAgendamento = agendarRetornoDto.DataAgendamento;
-        retorno.Status = EnumStatusConsulta.Agendada;
+        retorno.Status = EnumStatusAtendimento.Agendada;
         retorno.Retorno = true;
         retorno.MedicoId = MedicoId;
         retorno.PacienteId = PacienteId;
