@@ -25,12 +25,35 @@ public class LaudoController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok("Laudo cadastrado com sucesso!");
     }
+
     [HttpGet]
-    public async Task<IActionResult> VerTodosLaudos()
+    public async Task<IActionResult> VerTodosLaudos([FromQuery] LaudoQueryDto laudoQueryDto)
     {
-        List<Laudo> vertodoslaudos = await _context.Laudos.ToListAsync();
+        var laudoQuery = _context.Laudos.AsQueryable();
+        if (laudoQueryDto.PacienteId != null)
+        {
+            laudoQuery = laudoQuery.Where
+                (x => x.PacienteId == laudoQueryDto.PacienteId);
+        }
+        if (laudoQueryDto.MedicoId != null)
+        {
+            laudoQuery = laudoQuery.Where
+                (x => x.MedicoId == laudoQueryDto.MedicoId);
+        }
+        if (laudoQueryDto.DataInicio != null)
+        {
+            laudoQuery = laudoQuery.Where(x => x.DataLaudo >= laudoQueryDto.DataInicio);
+        }
+        if (laudoQueryDto.DataFinal != null)
+        {
+            laudoQuery = laudoQuery.Where(x => x.DataLaudo <= laudoQueryDto.DataFinal);
+        }
+       
+
+        List<Laudo> vertodoslaudos = await laudoQuery.ToListAsync();
         return Ok(vertodoslaudos);
     }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> VerLaudoPorId([FromRoute] int id)
     {
@@ -42,4 +65,6 @@ public class LaudoController : ControllerBase
             return Ok(laudo);
        
     }
+
+    
 }

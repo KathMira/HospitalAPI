@@ -45,5 +45,50 @@ public class ExameController : ControllerBase
         return Ok(exame);
         
     }
-    //add put e delete
+    [HttpPut("RealizarPagamento/{id}")]
+    public async Task<IActionResult> RealizaPagamento([FromRoute] int id)
+    {
+        Exame? exame = _context.Exames.FirstOrDefault(consulta => consulta.Id == id);
+        if (exame == null)
+        {
+            return BadRequest("Não achei fio");
+        }
+        exame.RealizarPagamento();
+        await _context.SaveChangesAsync();
+        return Ok("Pagamento Realizado");
+    }
+
+    [HttpPut("Realizar/{id}")]
+    public async Task<IActionResult> RealizaConsulta([FromRoute] int id, [FromBody] RealizarConsultaExameDto realizarExameDto)
+    {
+
+        Exame? exame = _context.Exames.FirstOrDefault(x => x.Id == id);
+
+        if (exame == null)
+        {
+            return BadRequest("Não encontrei fio");
+        }
+        if (exame.Pago == false)
+        {
+            return BadRequest("Vai pagar fio");
+        }
+        exame.Realizar(realizarExameDto);
+        await _context.SaveChangesAsync();
+        return Ok("Exame realizado com sucesso!");
+
+    }
+
+
+    [HttpPut("Cancelar/{id}")]
+    public async Task<IActionResult> CancelaConsulta([FromRoute] int id)
+    {
+        Consulta? consulta = _context.Consultas.FirstOrDefault(x => x.Id == id);
+        if (consulta == null)
+        {
+            return BadRequest("Não encontrei fio");
+        }
+        consulta.Cancelar();
+        await _context.SaveChangesAsync();
+        return Ok("Exame cancelado");
+    }
 }

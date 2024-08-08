@@ -1,10 +1,14 @@
 ﻿using HospitalAPI.Banco;
 using HospitalAPI.DTOs.Entrada;
+using HospitalAPI.DTOs.Saida;
+using HospitalAPI.Enums;
 using HospitalAPI.Modelos;
 using HospitalAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using HospitalAPI.DTOs.Saida;
 
 namespace HospitalAPI.Controllers;
 
@@ -26,6 +30,7 @@ public class PacienteController : ControllerBase
     {
         try
         {
+
             string nomeImagem = _imagesServices.Salvar(cadastrarPacienteDto.ImagemDocumento.OpenReadStream(),
                 Enums.EnumTiposDocumentos.DocumentoIdentificacao);
             Imagem imagem = new Imagem(Guid.Parse(nomeImagem), Enums.EnumTiposDocumentos.DocumentoIdentificacao);
@@ -95,4 +100,50 @@ public class PacienteController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok("Paciente atualizado com sucesso!");
     }
+
+    [HttpGet("ListaConsultasPorPaciente")]
+    public async Task<IActionResult> PegaConsultaPacientePorId([FromQuery]PacienteQueryDto pacienteQueryDto)
+    {
+        //var pegaPaciente = _context.Pacientes.AsQueryable();
+        var pegaConsulta = _context.Consultas.AsQueryable();
+
+        if (pacienteQueryDto.PacienteId != null)
+        {
+            pegaConsulta = pegaConsulta.Where(x => x.PacienteId == pacienteQueryDto.PacienteId);
+        }
+       
+        //var verPaciente = await pegaPaciente.Include(x => x.Pessoa).ToListAsync();
+        List<Consulta> verConsulta = await pegaConsulta.ToListAsync();
+        //var verExame = pegaExame.ToListAsync();
+        return Ok(verConsulta);
+
+      /*Paciente paciente = _context.Pacientes.Include(x => x.Pessoa).FirstOrDefault(x => x.Id == Id);
+        if (paciente == null)
+        {
+            return NotFound();
+        }*/
+        
+        /*
+        Exame exame = _context.Exames.FirstOrDefault(x => x.PacienteId == Id);
+        if (exame == null)
+        {
+            return NotFound();
+        }
+        return Ok($"{paciente.ToString} {consulta.ToString} {exame.ToString}");*/
+       
+        //return Ok();
+    }
+    [HttpGet("ListaExamesPorPaciente")]
+    public async Task<IActionResult> PegaExamesPacientePorId([FromQuery]PacienteQueryDto pacienteQueryDto)
+    {
+        var pegaExame = _context.Exames.AsQueryable();
+        if (pacienteQueryDto.PacienteId != null)
+        {
+            pegaExame = pegaExame.Where(x => x.PacienteId == pacienteQueryDto.PacienteId);
+        }
+       
+        List<Exame> verExame = await pegaExame.ToListAsync();
+        return Ok(verExame);
+    }
+
 }

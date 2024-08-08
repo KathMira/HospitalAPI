@@ -1,5 +1,6 @@
 ﻿using HospitalAPI.Banco;
 using HospitalAPI.DTOs.Entrada;
+using HospitalAPI.DTOs.Saida;
 using HospitalAPI.Modelos;
 using HospitalAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -37,7 +38,7 @@ public class MedicoController : ControllerBase
             Medico medico = new Medico(cadastrarMedicoDto);
             medico.Pessoa.ImagemDocumento = imagem;
             _context.Medicos.Add(medico);
-            
+
             await _context.SaveChangesAsync();
             return Ok("Médico cadastrado com sucesso!");
         }
@@ -47,6 +48,8 @@ public class MedicoController : ControllerBase
         }
 
     }
+
+
     [HttpGet("{id}/crm")]
     public async Task<IActionResult> VerDcoumentoCRM([FromRoute] int id)
     {
@@ -70,5 +73,62 @@ public class MedicoController : ControllerBase
         List<Medico> medicos = await _context.Medicos.ToListAsync();
         return Ok(medicos);
     }
-    // add put e delete
+
+    [HttpGet("ListaConsultasPorMedico")]
+    public async Task<IActionResult> PegaConsultaPacientePorId([FromQuery] MedicoQueryDto medicoQueryDto)
+    {
+        var pegaConsulta = _context.Consultas.AsQueryable();
+
+        if (medicoQueryDto.MedicoId != null)
+        {
+            pegaConsulta = pegaConsulta.Where(x => x.MedicoId == medicoQueryDto.MedicoId);
+        }
+        if (medicoQueryDto.DataInicio != null)
+        {
+            pegaConsulta = pegaConsulta.Where(x => x.DataInicio >= medicoQueryDto.DataInicio);
+        }
+        List<Consulta> verConsulta = await pegaConsulta.ToListAsync();
+        return Ok(verConsulta);
+    }
+
+
+    [HttpGet("ListaExamesPorMedico")]
+    public async Task<IActionResult> PegaExamesPacientePorId([FromQuery] MedicoQueryDto medicoQueryDto)
+    {
+        var pegaExame = _context.Exames.AsQueryable();
+        if (medicoQueryDto.MedicoId != null)
+        {
+            pegaExame = pegaExame.Where(x => x.PacienteId == medicoQueryDto.MedicoId);
+        }
+
+        List<Exame> verExame = await pegaExame.ToListAsync();
+        return Ok(verExame);
+    }
+
+    [HttpDelete("{Id}")]
+    public async Task<IActionResult> ApagarPaciente([FromRoute] int Id)
+    {
+      Medico? medico = _context.Medicos.FirstOrDefault(x => x.Id == Id);
+        if (medico == null)
+        {
+            return BadRequest("O Id informado não coincide com nenhum em nossa base de dados. Verifique e tente novamente!");
+        }
+        _context.Medicos.Remove(medico);
+        await _context.SaveChangesAsync();
+        return Ok("Médico removido com sucesso!");
+    }
+
+    [HttpPut("{Id}")]
+    public async Task<IActionResult> AtualizarMedico([FromRoute] int Id, [FromBody] CadastrarMedicoDto cadastrarMedicoDto)
+    {
+        Medico? medico = _context.Medicos.FirstOrDefault(x => x.Id == Id);
+        if (medico == null)
+        {
+            return BadRequest("Id não existe");
+        }
+
+        medico.Atualizar(cadastrarMedicoDto);
+        await _context.SaveChangesAsync();
+        return Ok("Médico atualizado com sucesso!");
+    }
 }

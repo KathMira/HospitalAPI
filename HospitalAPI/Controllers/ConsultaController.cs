@@ -29,7 +29,7 @@ public class ConsultaController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> VerTodasConsultas()
     {
-        List<Consulta> verconsultas = await _context.Consultas.ToListAsync();
+        List<Consulta> verconsultas = await _context.Consultas.Include(x => x.Laudos).ToListAsync();
         return Ok(verconsultas);
     }
 
@@ -47,7 +47,7 @@ public class ConsultaController : ControllerBase
     }
 
     [HttpPut("Realizar/{id}")]
-    public async Task<IActionResult> RealizaConsulta([FromRoute] int id, [FromBody] RealizarConsultaDto realizarConsultaDto)
+    public async Task<IActionResult> RealizaConsulta([FromRoute] int id, [FromBody] RealizarConsultaExameDto realizarConsultaDto)
     {
         
         Consulta? consulta = _context.Consultas.FirstOrDefault(x => x.Id == id);
