@@ -7,8 +7,8 @@ public class Exame
 {
     public int Id { get; set; }
     public string NomeExame { get; set; } = string.Empty;
-    public int MedicoId { get; set; }
-    public int PacienteId { get; set; }
+    public Guid MedicoId { get; set; }
+    public Guid PacienteId { get; set; }
     public DateTime DataAgendamento { get; set; }
     public DateTime? DataInicio { get; set; }
     public DateTime? DataFim { get; set; }

@@ -1,5 +1,4 @@
 ﻿using HospitalAPI.DTOs.Entrada;
-using System;
 
 namespace HospitalAPI.Modelos;
 
@@ -9,10 +8,10 @@ public class Laudo
     public string? CID { get; set; }
     public DateTime DataLaudo { get; set; }
     public string NomeLaudo { get; set; } = string.Empty;
-    public int PacienteId { get; set; }
+    public Guid PacienteId { get; set; }
     public string DescricaoLaudo { get; set; } = string.Empty;
     public int ExameId { get; set; }
-    public int MedicoId { get; set; }
+    public Guid MedicoId { get; set; }
     public int ConsultaId { get; set; }
 
 

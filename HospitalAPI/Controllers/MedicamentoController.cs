@@ -1,6 +1,7 @@
 ﻿using HospitalAPI.Banco;
 using HospitalAPI.DTOs.Entrada;
 using HospitalAPI.Modelos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ public class MedicamentoController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "Superior")]
     public async Task<IActionResult> CadastrarMedicamento([FromBody] CadastrarMedicamentoDto cadastrarMedicamentoDto)
     {
         try
@@ -36,6 +38,7 @@ public class MedicamentoController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = "Superior")]
     public async Task<IActionResult> VerTodosMedicamentos()
     {
 
@@ -45,6 +48,7 @@ public class MedicamentoController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Policy = "Superior")]
     public async Task<IActionResult> VerMedicamentoPorId([FromRoute]int id)
     {
         
@@ -57,6 +61,7 @@ public class MedicamentoController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "Superior")]
     public async Task<IActionResult> AtualizarMedicamento([FromRoute]int id, [FromBody] CadastrarMedicamentoDto cadastrarMedicamentoDto)
     {
         Medicamentos? medicamentos = _context.Medicamentos.FirstOrDefault(x => x.Id == id);

@@ -1,7 +1,4 @@
 ﻿using HospitalAPI.DTOs.Entrada;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
 
 namespace HospitalAPI.Modelos;
 
@@ -11,8 +8,8 @@ public class Medicamentos
     public int Id { get; set; }
     public string NomeMedicamento { get; set; } = string.Empty;
     
-    public int PacienteId { get; set; }
-    public int MedicoId { get; set; }
+    public Guid PacienteId { get; set; }
+    public Guid MedicoId { get; set; }
 
 
     public Medicamentos() { }

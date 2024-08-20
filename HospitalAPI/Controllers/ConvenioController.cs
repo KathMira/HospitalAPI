@@ -1,6 +1,7 @@
 ﻿using HospitalAPI.Banco;
 using HospitalAPI.DTOs.Entrada;
 using HospitalAPI.Modelos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,7 @@ public class ConvenioController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "Admin")]
     public async Task<IActionResult> CadastroConvenio(CadastrarConvenioDto cadastrarConvenioDto)
     {
         Convenio convenio = new Convenio(cadastrarConvenioDto);
@@ -28,6 +30,7 @@ public class ConvenioController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> VerTodosConvenios()
     {
         List<Convenio> convenios = await _context.Convenios.ToListAsync();

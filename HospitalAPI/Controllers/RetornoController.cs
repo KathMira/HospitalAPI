@@ -1,6 +1,7 @@
 ﻿using HospitalAPI.Banco;
 using HospitalAPI.DTOs.Entrada;
 using HospitalAPI.Modelos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers;
@@ -17,6 +18,7 @@ public class RetornoController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "Superior")]
     public async Task<IActionResult> AgendaRetorno([FromBody] AgendarRetornoDto agendarRetornoDto)
     {
         Consulta? consulta = _context.Consultas.FirstOrDefault(x => x.Id == agendarRetornoDto.ConsultaId);
@@ -29,6 +31,4 @@ public class RetornoController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok("Retorno Agendado com sucesso!");
     }
-
-    //add put, get, delete
 }

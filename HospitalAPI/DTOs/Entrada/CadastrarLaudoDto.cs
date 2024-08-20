@@ -3,8 +3,8 @@
 public class CadastrarLaudoDto
 {
     public int ConsultaId { get; set; }
-    public int MedicoId { get; set; }
-    public int PacienteId { get; set; }
+    public Guid MedicoId { get; set; }
+    public Guid PacienteId { get; set; }
     public int ExameId { get; set; }
     public string? CID { get; set; }
     public DateTime DataLaudo { get; set; }

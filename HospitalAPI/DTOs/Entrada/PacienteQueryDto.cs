@@ -6,7 +6,7 @@ namespace HospitalAPI.DTOs.Entrada;
 public class PacienteQueryDto
 {
 
-    public int PacienteId { get; set; }
+    public Guid PacienteId { get; set; }
 
 
 }

@@ -1,5 +1,4 @@
 ﻿using HospitalAPI.Enums;
-using HospitalAPI.Modelos;
 
 namespace HospitalAPI.Services;
 

@@ -3,7 +3,7 @@
 public class AgendarConsultaDto
 {
     public DateTime DataAgendamento { get; set; }
-    public int MedicoId { get; set; }
-    public int PacienteId { get; set; }
+    public Guid MedicoId { get; set; }
+    public Guid PacienteId { get; set; }
 
 }

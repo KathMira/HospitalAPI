@@ -1,6 +1,7 @@
 ﻿using HospitalAPI.Banco;
 using HospitalAPI.DTOs.Entrada;
 using HospitalAPI.Modelos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ public class ConsultaController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CadastroConsulta([FromBody] AgendarConsultaDto cadastrarConsultaDto)
     {
         Consulta consultas = new Consulta(cadastrarConsultaDto);
@@ -27,6 +29,7 @@ public class ConsultaController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = "Superior")]
     public async Task<IActionResult> VerTodasConsultas()
     {
         List<Consulta> verconsultas = await _context.Consultas.Include(x => x.Laudos).ToListAsync();
@@ -34,6 +37,7 @@ public class ConsultaController : ControllerBase
     }
 
     [HttpPut("RealizarPagamento/{id}")]
+    [Authorize(Policy = "AdminPaciente")]
     public async Task<IActionResult> RealizaPagamento([FromRoute] int id)
     {
         Consulta? consulta = _context.Consultas.FirstOrDefault(consulta => consulta.Id == id);
@@ -47,6 +51,7 @@ public class ConsultaController : ControllerBase
     }
 
     [HttpPut("Realizar/{id}")]
+    [Authorize(Policy = "Superior")]
     public async Task<IActionResult> RealizaConsulta([FromRoute] int id, [FromBody] RealizarConsultaExameDto realizarConsultaDto)
     {
         
@@ -68,6 +73,7 @@ public class ConsultaController : ControllerBase
 
 
     [HttpPut("Cancelar/{id}")]
+    [Authorize(Policy = "AdminPaciente")]
     public async Task<IActionResult> CancelaConsulta([FromRoute] int id)
     {
         Consulta? consulta = _context.Consultas.FirstOrDefault(x => x.Id == id);

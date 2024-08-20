@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using HospitalAPI.DTOs.Entrada;
+﻿using HospitalAPI.DTOs.Entrada;
 using HospitalAPI.Enums;
 
 namespace HospitalAPI.Modelos;
@@ -10,8 +9,8 @@ public class Consulta
     public DateTime? DataInicio { get; set; }
     public DateTime? DataFim { get; set; }
     public DateTime DataAgendamento { get; set; }
-    public int MedicoId { get; set; }
-    public int PacienteId { get; set; }
+    public Guid MedicoId { get; set; }
+    public Guid PacienteId { get; set; }
     
     public virtual Medico Medico { get; set; }
     public virtual Paciente Paciente { get; set; }
@@ -35,7 +34,7 @@ public class Consulta
 
     }
 
-    public Consulta(RealizarConsultaExameDto realizarConsultaDto, int PacienteId, int MedicoId)
+    public Consulta(RealizarConsultaExameDto realizarConsultaDto, Guid PacienteId, Guid MedicoId)
     {
         DataAgendamento = realizarConsultaDto.DataFim.AddDays(7);
         Status = EnumStatusAtendimento.Agendada;

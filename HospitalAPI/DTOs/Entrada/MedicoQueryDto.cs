@@ -3,6 +3,6 @@
 public class MedicoQueryDto
 {
 
-    public int MedicoId { get; set; }
+    public Guid MedicoId { get; set; }
     public DateTime? DataInicio { get; set; }
 }

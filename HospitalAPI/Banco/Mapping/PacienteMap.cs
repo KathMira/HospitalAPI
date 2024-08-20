@@ -10,6 +10,7 @@ public class PacienteMap : IEntityTypeConfiguration<Paciente>
     {
         builder.HasOne(x => x.Convenio).WithMany().OnDelete(DeleteBehavior.NoAction).HasForeignKey(x => x.ConvenioId);
        builder.HasMany(x => x.Medicamentos).WithOne().HasForeignKey(x => x.PacienteId).OnDelete(DeleteBehavior.NoAction);
+        builder.HasOne(x => x.Pessoa).WithOne().HasForeignKey<Paciente>(x => x.PessoaId);
     }
 }
 

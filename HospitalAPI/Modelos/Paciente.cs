@@ -1,6 +1,7 @@
 ﻿using HospitalAPI.DTOs.Entrada;
 using HospitalAPI.Enums;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.ConstrainedExecution;
 
@@ -8,9 +9,8 @@ namespace HospitalAPI.Modelos;
 
 public class Paciente
 {
-    public int PessoaId { get; set; }
-
-    public int Id { get; set; }
+    public Guid Id { get; set; }
+    public Guid PessoaId { get; set; }
 
     public float Peso { get; set; }
 
@@ -30,12 +30,12 @@ public class Paciente
 
     public virtual List<Medicamentos> Medicamentos { get; set; }
     public virtual Convenio Convenio { get; set; }
-    public virtual Pessoas Pessoa { get; set; }
+    public virtual Pessoa Pessoa { get; set; }
 
     public Paciente() { }
     public Paciente(CadastrarPacienteDto cadastrarPacienteDto)
     {
-        Pessoa = new Pessoas
+        Pessoa = new Pessoa
             (cadastrarPacienteDto.NomeCompleto,
             cadastrarPacienteDto.CPF,
             DateOnly.FromDateTime(cadastrarPacienteDto.DataNascimento),
@@ -52,6 +52,7 @@ public class Paciente
         TemConvenio = false;
         if (ConvenioId != null)
             TemConvenio = true;
+       
     }
     public void Atualizar(CadastrarPacienteDto cadastrarPacienteDto)
     {

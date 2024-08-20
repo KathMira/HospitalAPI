@@ -1,20 +1,19 @@
 ﻿using HospitalAPI.DTOs.Entrada;
-using System.ComponentModel.DataAnnotations;
 
 namespace HospitalAPI.Modelos;
 
 public class Enfermeiro
 {
 
-    public int IdEnfermeiro { get; set; }
-    public int PessoaId { get; set; }
+    public Guid Id { get; set; }
+    public Guid PessoaId { get; set; }
     public int SetorId { get; }
-    public virtual Pessoas Pessoa { get; set; }
+    public virtual Pessoa Pessoa { get; set; }
 
-    public Enfermeiro() { }
+    private Enfermeiro() { }
     public Enfermeiro(CadastrarEnfermeiroDto cadastrarEnfermeiroDto)
     {
-        Pessoa = new Pessoas
+        Pessoa = new Pessoa
             (cadastrarEnfermeiroDto.NomeCompleto,
             cadastrarEnfermeiroDto.CPF,
             DateOnly.FromDateTime(cadastrarEnfermeiroDto.DataNascimento),

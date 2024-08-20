@@ -1,6 +1,7 @@
 ﻿using HospitalAPI.Banco;
 using HospitalAPI.DTOs.Entrada;
 using HospitalAPI.Modelos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ public class LaudoController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "Superior")]
     public async Task<IActionResult> Cadastrarlaudo([FromBody] CadastrarLaudoDto cadastrarLaudoDto)
     {
         Laudo laudo = new Laudo(cadastrarLaudoDto);
@@ -27,6 +29,7 @@ public class LaudoController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = "Superior")]
     public async Task<IActionResult> VerTodosLaudos([FromQuery] LaudoQueryDto laudoQueryDto)
     {
         var laudoQuery = _context.Laudos.AsQueryable();
@@ -55,6 +58,7 @@ public class LaudoController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Policy = "Superior")]
     public async Task<IActionResult> VerLaudoPorId([FromRoute] int id)
     {
             Laudo? laudo = await _context.Laudos.FirstOrDefaultAsync(x => x.Id == id);

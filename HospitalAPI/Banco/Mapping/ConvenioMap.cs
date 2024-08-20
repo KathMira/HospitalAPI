@@ -8,6 +8,6 @@ public class ConvenioMap : IEntityTypeConfiguration<Convenio>
 {
     public void Configure(EntityTypeBuilder<Convenio> builder)
     {
-        throw new NotImplementedException();
+       
     }
 }
