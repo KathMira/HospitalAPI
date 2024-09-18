@@ -21,7 +21,7 @@ public class MedicamentoController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Policy = "Superior")]
+    [Authorize(Policy = Policies.Superior)]
     public async Task<IActionResult> CadastrarMedicamento([FromBody] CadastrarMedicamentoDto cadastrarMedicamentoDto)
     {
         try
@@ -38,7 +38,7 @@ public class MedicamentoController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Policy = "Superior")]
+    [Authorize(Policy = Policies.Superior)]
     public async Task<IActionResult> VerTodosMedicamentos()
     {
 
@@ -48,7 +48,7 @@ public class MedicamentoController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize(Policy = "Superior")]
+    [Authorize(Policy = Policies.Superior)]
     public async Task<IActionResult> VerMedicamentoPorId([FromRoute]int id)
     {
         
@@ -61,7 +61,7 @@ public class MedicamentoController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [Authorize(Policy = "Superior")]
+    [Authorize(Policy = Policies.Superior)]
     public async Task<IActionResult> AtualizarMedicamento([FromRoute]int id, [FromBody] CadastrarMedicamentoDto cadastrarMedicamentoDto)
     {
         Medicamentos? medicamentos = _context.Medicamentos.FirstOrDefault(x => x.Id == id);

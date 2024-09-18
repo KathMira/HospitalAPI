@@ -1,9 +1,11 @@
-﻿namespace HospitalAPI.DTOs.Entrada;
+﻿using HospitalAPI.Modelos;
+
+namespace HospitalAPI.DTOs.Entrada;
 
 public class CadastrarMedicoDto
 {
     public string CRM { get; set; }
-    public string Area { get; set; } = string.Empty;
+    public Area area { get; set; }
     public string NomeCompleto { get; set; } = string.Empty;
     public string CPF { get; set; }
     public string Telefone { get; set; }
@@ -12,4 +14,6 @@ public class CadastrarMedicoDto
 
     public IFormFile ImagemDocumento { get; set; }
     public string Senha { get; set; }
+
+
 }

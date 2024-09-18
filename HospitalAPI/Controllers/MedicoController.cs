@@ -24,7 +24,7 @@ public class MedicoController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = Policies.Administrador)]
     public async Task<IActionResult> CadastrarMedico([FromForm] CadastrarMedicoDto cadastrarMedicoDto)
     {
 
@@ -33,8 +33,9 @@ public class MedicoController : ControllerBase
             Medico medico = new Medico(cadastrarMedicoDto);
 
             string nomeImagem = _imagesServices.Salvar(cadastrarMedicoDto.ImagemDocumento.OpenReadStream(),
-    Enums.EnumTiposDocumentos.DocumentoMedico);
-                Imagem imagem = new Imagem(Guid.Parse(nomeImagem),
+                   Enums.EnumTiposDocumentos.DocumentoMedico);
+
+            Imagem imagem = new Imagem(Guid.Parse(nomeImagem),
                 Enums.EnumTiposDocumentos.DocumentoMedico);
 
             _context.Imagens.Add(imagem);
@@ -72,10 +73,10 @@ public class MedicoController : ControllerBase
 
 
     [HttpGet("{id}/crm")]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = Policies.Administrador)]
     public async Task<IActionResult> VerDcoumentoCRM([FromRoute] string id)
     {
-        Medico medico = await _context.Medicos.Include(x => x.Pessoa)
+        Medico? medico = await _context.Medicos.Include(x => x.Pessoa)
            .Include(x => x.Pessoa.ImagemDocumento)
            .FirstOrDefaultAsync(x => x.Id.ToString() == id);
         if (medico == null)
@@ -89,7 +90,7 @@ public class MedicoController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = Policies.Administrador)]
     public async Task<IActionResult> VerTodosMedicos()
     {
 
@@ -98,16 +99,16 @@ public class MedicoController : ControllerBase
     }
 
     [HttpGet("ListaConsultasPorMedico")]
-    [Authorize(Policy = "Superior")]
+    [Authorize(Policy = Policies.Superior)]
     public async Task<IActionResult> PegaConsultaPacientePorId([FromQuery] MedicoQueryDto medicoQueryDto)
     {
         var pegaConsulta = _context.Consultas.AsQueryable();
 
-        if (medicoQueryDto.MedicoId != null)
+        if (medicoQueryDto?.MedicoId != null)
         {
             pegaConsulta = pegaConsulta.Where(x => x.MedicoId == medicoQueryDto.MedicoId);
         }
-        if (medicoQueryDto.DataInicio != null)
+        if (medicoQueryDto?.DataInicio != null)
         {
             pegaConsulta = pegaConsulta.Where(x => x.DataInicio >= medicoQueryDto.DataInicio);
         }
@@ -117,11 +118,11 @@ public class MedicoController : ControllerBase
 
 
     [HttpGet("ListaExamesPorMedico")]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = Policies.Administrador)]
     public async Task<IActionResult> PegaExamesPacientePorId([FromQuery] MedicoQueryDto medicoQueryDto)
     {
         var pegaExame = _context.Exames.AsQueryable();
-        if (medicoQueryDto.MedicoId != null)
+        if (medicoQueryDto?.MedicoId != null)
         {
             pegaExame = pegaExame.Where(x => x.PacienteId == medicoQueryDto.MedicoId);
         }
@@ -131,7 +132,7 @@ public class MedicoController : ControllerBase
     }
 
     [HttpDelete("{Id}")]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = Policies.Administrador)]
     public async Task<IActionResult> ApagarPaciente([FromRoute] string Id)
     {
       Medico? medico = _context.Medicos.FirstOrDefault(x => x.Id.ToString() == Id);
@@ -145,7 +146,7 @@ public class MedicoController : ControllerBase
     }
 
     [HttpPut("{Id}")]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = Policies.Administrador)]
     public async Task<IActionResult> AtualizarMedico([FromRoute] string Id, [FromBody] CadastrarMedicoDto cadastrarMedicoDto)
     {
         Medico? medico = _context.Medicos.FirstOrDefault(x => x.Id.ToString() == Id);

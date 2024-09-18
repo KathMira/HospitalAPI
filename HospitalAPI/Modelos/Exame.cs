@@ -12,7 +12,7 @@ public class Exame
     public DateTime DataAgendamento { get; set; }
     public DateTime? DataInicio { get; set; }
     public DateTime? DataFim { get; set; }
-
+    public double ValorExame { get; set; }
     public EnumStatusAtendimento Status {  get; set; }
     public bool Pago { get; set; }
     public virtual Laudo Laudo { get; set; }
@@ -27,12 +27,35 @@ public class Exame
         MedicoId = cadastrarExameDto.MedicoId;
         PacienteId = cadastrarExameDto.PacienteId;
         DataAgendamento = cadastrarExameDto.DataAgendamento;
-
-
+        Status = EnumStatusAtendimento.Agendada;
+        if(Medico!.area.NomeArea == EnumArea.Clinico)
+        {
+            NomeExame = EnumTiposExames.Hemograma.ToString();
+            ValorExame = 200;
+        }
+        if(Medico!.area.NomeArea == EnumArea.Pediatra)
+        {
+            NomeExame = EnumTiposExames.Audiometria.ToString();
+            ValorExame = 150;
+        }
+        if(Medico!.area.NomeArea == EnumArea.Endocrinologista)
+        {
+            NomeExame = EnumTiposExames.Ultrassonografia.ToString();
+            ValorExame = 100;
+        }
+        if(Medico!.area.NomeArea == EnumArea.Cardiologista)
+        {
+            NomeExame = EnumTiposExames.Ecocardiograma.ToString();
+            ValorExame = 100;
+        }
+        if (Paciente!.TemConvenio == true)
+        {
+            Pago = true;
+        }
     }
     public void RealizarPagamento()
     {
-        Pago = true;
+       Pago = true;
     }
     public void Realizar(RealizarConsultaExameDto realizarExameDto)
     {

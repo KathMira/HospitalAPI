@@ -1,4 +1,5 @@
 ﻿using HospitalAPI.DTOs.Entrada;
+using HospitalAPI.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace HospitalAPI.Modelos;
@@ -9,7 +10,7 @@ public class Medico
     public Guid PessoaId { get; set; }
    
     public string CRM { get; set; }
-    public string Area { get; set; } = string.Empty;
+    public virtual Area area { get; set; }
     public virtual Pessoa Pessoa { get; set; }
 
     public Medico() { }
@@ -19,7 +20,7 @@ public class Medico
         Pessoa = new Pessoa(cadastrarMedicoDto.NomeCompleto, cadastrarMedicoDto.CPF, DateOnly.FromDateTime(cadastrarMedicoDto.DataNascimento),
         cadastrarMedicoDto.Telefone, cadastrarMedicoDto.Endereco);
         CRM = cadastrarMedicoDto.CRM;
-        Area = cadastrarMedicoDto.Area;
+        area = cadastrarMedicoDto.area;
        
     }
     public void Atualizar(CadastrarMedicoDto cadastrarMedicoDto)
@@ -32,6 +33,7 @@ public class Medico
            cadastrarMedicoDto.Endereco);
 
         CRM = cadastrarMedicoDto.CRM;
-        Area = cadastrarMedicoDto.Area;
+        area = cadastrarMedicoDto.area;
+        
     }
 }

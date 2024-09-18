@@ -4,6 +4,7 @@ public enum EnumTiposDocumentos
 {
     DocumentoConvenio,
     DocumentoIdentificacao,
-    DocumentoMedico
+    DocumentoMedico,
+    DocumentoLaudo
 
 }

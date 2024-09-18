@@ -1,6 +1,6 @@
 ﻿namespace HospitalAPI.Modelos;
 
-public class Policies
+public static class Policies 
 {
     public const string Administrador = "Administrador";
     public const string Superior = "Superior";

@@ -11,11 +11,11 @@ public class Consulta
     public DateTime DataAgendamento { get; set; }
     public Guid MedicoId { get; set; }
     public Guid PacienteId { get; set; }
-    
+    public double ValorConsulta { get; set; }
     public virtual Medico Medico { get; set; }
     public virtual Paciente Paciente { get; set; }
     public virtual List<Laudo> Laudos { get; set; }
-
+    
     public EnumStatusAtendimento Status { get; set; }
     public bool Retorno { get; set; }
 
@@ -23,11 +23,11 @@ public class Consulta
 
 
     public Consulta() { }
-    public Consulta(AgendarConsultaDto cadastrarConsultaDto)
+    public Consulta(AgendarConsultaDto agendarConsultaDto)
     {
-        DataAgendamento = cadastrarConsultaDto.DataAgendamento;
-        MedicoId = cadastrarConsultaDto.MedicoId;
-        PacienteId = cadastrarConsultaDto.PacienteId;
+        DataAgendamento = agendarConsultaDto.DataAgendamento;
+        MedicoId = agendarConsultaDto.MedicoId;
+        PacienteId = agendarConsultaDto.PacienteId;
         Retorno = false;
         Pago = false;
         Status = EnumStatusAtendimento.Agendada;
@@ -38,6 +38,7 @@ public class Consulta
     {
         DataAgendamento = realizarConsultaDto.DataFim.AddDays(7);
         Status = EnumStatusAtendimento.Agendada;
+        
         Retorno = true;
         this.MedicoId = MedicoId;
         this.PacienteId = PacienteId;
@@ -69,4 +70,5 @@ public class Consulta
         retorno.PacienteId = PacienteId;
         return retorno;
     }
+
 }

@@ -13,7 +13,8 @@ public class Laudo
     public int ExameId { get; set; }
     public Guid MedicoId { get; set; }
     public int ConsultaId { get; set; }
-
+    public int ImagemDocumentoId { get; set; }
+    public virtual Imagem ImagemDocumento { get; set; }
 
     public Laudo() { }
 

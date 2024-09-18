@@ -40,4 +40,5 @@ public class HospitalAPIContext : IdentityDbContext<Pessoa, IdentityRole<Guid>, 
     public DbSet<Medicamentos> Medicamentos { get; set; }
 
     public DbSet<Administrador> Administradores { get; set; }
+    public DbSet<Area> Areas { get; set; }
 }

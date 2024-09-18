@@ -19,7 +19,7 @@ public class ExameController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Policy = "AdminPaciente")]
+    [Authorize(Policy = Policies.AdminPaciente)]
     public async Task<IActionResult> CadastroExame([FromBody] CadastrarExameDto cadastrarExameDto)
     {
         Exame exame = new Exame(cadastrarExameDto);
@@ -29,7 +29,7 @@ public class ExameController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Policy = "Superior")]
+    [Authorize(Policy = Policies.Superior)]
     public async Task<IActionResult> VerTodosExames()
     {
         List<Exame> vertodosexames = await _context.Exames.ToListAsync();
@@ -37,7 +37,7 @@ public class ExameController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize(Policy = "Superior")]
+    [Authorize(Policy = Policies.Superior)]
     public async Task<IActionResult> VerExamePorId([FromRoute] int id)
     {
         Exame? exame = await _context.Exames.FirstOrDefaultAsync(x => x.Id == id);
@@ -49,7 +49,7 @@ public class ExameController : ControllerBase
         
     }
     [HttpPut("RealizarPagamento/{id}")]
-    [Authorize(Policy = "AdminPaciente")]
+    [Authorize(Policy = Policies.AdminPaciente)]
     public async Task<IActionResult> RealizaPagamento([FromRoute] int id)
     {
         Exame? exame = _context.Exames.FirstOrDefault(consulta => consulta.Id == id);
@@ -63,7 +63,7 @@ public class ExameController : ControllerBase
     }
 
     [HttpPut("Realizar/{id}")]
-    [Authorize(Policy = "Superior")]
+    [Authorize(Policy = Policies.Superior)]
     public async Task<IActionResult> RealizaConsulta([FromRoute] int id, [FromBody] RealizarConsultaExameDto realizarExameDto)
     {
 
@@ -85,7 +85,7 @@ public class ExameController : ControllerBase
 
 
     [HttpPut("Cancelar/{id}")]
-    [Authorize(Policy = "AdminPaciente")]
+    [Authorize(Policy = Policies.AdminPaciente)]
     public async Task<IActionResult> CancelaConsulta([FromRoute] int id)
     {
         Consulta? consulta = _context.Consultas.FirstOrDefault(x => x.Id == id);

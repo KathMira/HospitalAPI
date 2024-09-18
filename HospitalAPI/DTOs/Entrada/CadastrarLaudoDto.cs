@@ -10,5 +10,7 @@ public class CadastrarLaudoDto
     public DateTime DataLaudo { get; set; }
     public string NomeLaudo { get; set; } = string.Empty;
     public string DescricaoLaudo { get; set; } = string.Empty;
-    
+
+    public IFormFile ImagemDocumento { get; set; }
+
 }

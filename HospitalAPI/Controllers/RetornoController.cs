@@ -18,7 +18,7 @@ public class RetornoController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Policy = "Superior")]
+    [Authorize(Policy = Policies.Superior)]
     public async Task<IActionResult> AgendaRetorno([FromBody] AgendarRetornoDto agendarRetornoDto)
     {
         Consulta? consulta = _context.Consultas.FirstOrDefault(x => x.Id == agendarRetornoDto.ConsultaId);

@@ -4,6 +4,7 @@ using HospitalAPI.Banco;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalAPI.Migrations
 {
     [DbContext(typeof(HospitalAPIContext))]
-    partial class HospitalAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20240827201938_Adicionando imagem em Laudos")]
+    partial class AdicionandoimagememLaudos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace HospitalAPI.Migrations
                     b.HasIndex("PessoaId")
                         .IsUnique();
 
-                    b.ToTable("Administradores", (string)null);
+                    b.ToTable("Administradores");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Consulta", b =>
@@ -77,7 +80,7 @@ namespace HospitalAPI.Migrations
 
                     b.HasIndex("PacienteId");
 
-                    b.ToTable("Consultas", (string)null);
+                    b.ToTable("Consultas");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Convenio", b =>
@@ -97,7 +100,7 @@ namespace HospitalAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Convenios", (string)null);
+                    b.ToTable("Convenios");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Enfermeiro", b =>
@@ -114,7 +117,7 @@ namespace HospitalAPI.Migrations
                     b.HasIndex("PessoaId")
                         .IsUnique();
 
-                    b.ToTable("Enfermeiros", (string)null);
+                    b.ToTable("Enfermeiros");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Exame", b =>
@@ -156,7 +159,7 @@ namespace HospitalAPI.Migrations
 
                     b.HasIndex("PacienteId");
 
-                    b.ToTable("Exames", (string)null);
+                    b.ToTable("Exames");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Imagem", b =>
@@ -175,7 +178,7 @@ namespace HospitalAPI.Migrations
 
                     b.HasKey("ImagemId");
 
-                    b.ToTable("Imagens", (string)null);
+                    b.ToTable("Imagens");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Laudo", b =>
@@ -224,7 +227,7 @@ namespace HospitalAPI.Migrations
 
                     b.HasIndex("ImagemDocumentoId");
 
-                    b.ToTable("Laudos", (string)null);
+                    b.ToTable("Laudos");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Medicamentos", b =>
@@ -249,7 +252,7 @@ namespace HospitalAPI.Migrations
 
                     b.HasIndex("PacienteId");
 
-                    b.ToTable("Medicamentos", (string)null);
+                    b.ToTable("Medicamentos");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Medico", b =>
@@ -274,7 +277,7 @@ namespace HospitalAPI.Migrations
                     b.HasIndex("PessoaId")
                         .IsUnique();
 
-                    b.ToTable("Medicos", (string)null);
+                    b.ToTable("Medicos");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Paciente", b =>
@@ -316,7 +319,7 @@ namespace HospitalAPI.Migrations
                     b.HasIndex("PessoaId")
                         .IsUnique();
 
-                    b.ToTable("Pacientes", (string)null);
+                    b.ToTable("Pacientes");
                 });
 
             modelBuilder.Entity("HospitalAPI.Modelos.Pessoa", b =>

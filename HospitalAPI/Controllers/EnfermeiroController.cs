@@ -25,7 +25,7 @@ public class EnfermeiroController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = Policies.Administrador)]
     public async Task<IActionResult> CadastrarEnfermeiro([FromForm] CadastrarEnfermeiroDto cadastrarEnfermeiroDto)
     {
         try
@@ -66,10 +66,10 @@ public class EnfermeiroController : ControllerBase
     }
 
     [HttpGet("{id}/documento")]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = Policies.Administrador)]
     public async Task<IActionResult> verDocumento([FromRoute] Guid id)
     {
-        Enfermeiro enfermeiro = await _context.Enfermeiros.Include(x => x.Pessoa)
+        Enfermeiro? enfermeiro = await _context.Enfermeiros.Include(x => x.Pessoa)
             .Include(x => x.Pessoa.ImagemDocumento)
             .FirstOrDefaultAsync(x => x.Id == id);
         if (enfermeiro == null)
@@ -82,7 +82,7 @@ public class EnfermeiroController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Policy = "Superior")]
+    [Authorize(Policy = Policies.Superior)]
     public async Task<IActionResult> ListarTodosEnfermeiros()
     {
         List<Enfermeiro> verEnfermeiros = await _context.Enfermeiros.ToListAsync();
@@ -90,10 +90,10 @@ public class EnfermeiroController : ControllerBase
     }
 
     [HttpDelete("{Id}")]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = Policies.Administrador)]
     public async Task<IActionResult> ApagarEnfermeiro([FromRoute] Guid Id)
     {
-        Enfermeiro enfermeiro = _context.Enfermeiros.FirstOrDefault(x => x.Id == Id);
+        Enfermeiro? enfermeiro = _context.Enfermeiros.FirstOrDefault(x => x.Id == Id);
         if (enfermeiro == null)
         {
             return BadRequest("O Id informado não coincide com nenhum em nossa base de dados. Verifique e tente novamente!");
@@ -104,10 +104,10 @@ public class EnfermeiroController : ControllerBase
     }
 
     [HttpPut("{Id}")]
-    [Authorize(Policy = "Admin")]
+    [Authorize(Policy = Policies.Administrador)]
     public async Task<IActionResult> AtualizarEnfermeiro([FromRoute] Guid Id, [FromBody] CadastrarEnfermeiroDto cadastrarEnfermeiroDto)
     {
-        Enfermeiro enfermeiro = _context.Enfermeiros.FirstOrDefault(x => x.Id == Id);
+        Enfermeiro? enfermeiro = _context.Enfermeiros.FirstOrDefault(x => x.Id == Id);
         if (enfermeiro == null)
         {
             return BadRequest("O Id informado não coincide com nenhum em nossa base de dados. Verifique e tente novamente!");

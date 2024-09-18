@@ -6,10 +6,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NLog.Web;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
+
+
+
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
 
 // Add services to the container.
 builder.Services.AddDbContext<HospitalAPIContext>(options =>
@@ -55,10 +61,10 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddAuthorization(opcoes =>
 {
-    opcoes.AddPolicy("Admin", policy => policy.RequireRole(Roles.Administrador));
-    opcoes.AddPolicy("Funcionários", policy => policy.RequireRole(Roles.Administrador, Roles.Medico, Roles.Enfermeiro));
-    opcoes.AddPolicy("Superior", policy => policy.RequireRole(Roles.Administrador, Roles.Medico));
-    opcoes.AddPolicy("AdminPaciente", policy => policy.RequireRole(Roles.Paciente, Roles.Administrador));
+    opcoes.AddPolicy(Policies.Administrador, policy => policy.RequireRole(Roles.Administrador));
+    opcoes.AddPolicy(Policies.Funcionarios, policy => policy.RequireRole(Roles.Administrador, Roles.Medico, Roles.Enfermeiro));
+    opcoes.AddPolicy(Policies.Superior, policy => policy.RequireRole(Roles.Administrador, Roles.Medico));
+    opcoes.AddPolicy(Policies.AdminPaciente, policy => policy.RequireRole(Roles.Paciente, Roles.Administrador));
 });
 
 builder.Services.AddScoped<IImagesServices, LocalDiscImageService>();

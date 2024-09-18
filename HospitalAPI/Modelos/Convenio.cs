@@ -9,9 +9,15 @@ public class Convenio
     public float Desconto { get; set; }
 
     public Convenio() { }
-    public Convenio(CadastrarConvenioDto cadastrarConvenio)
+    public Convenio(CadastrarConvenioDto cadastrarConvenioDto)
     {
-        Nome = cadastrarConvenio.Nome;
-        Desconto = cadastrarConvenio.Desconto;
+        Nome = cadastrarConvenioDto.Nome;
+        Desconto = cadastrarConvenioDto.Desconto;
     }
+    public void Atualizar(CadastrarConvenioDto cadastrarConvenioDto)
+    {
+        Nome = cadastrarConvenioDto.Nome;
+        Desconto = cadastrarConvenioDto.Desconto;
+    }
+
 }
