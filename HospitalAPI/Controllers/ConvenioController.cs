@@ -25,15 +25,34 @@ public class ConvenioController : ControllerBase
     [Authorize(Policy = Policies.Administrador)]
     public async Task<IActionResult> CadastroConvenio(CadastrarConvenioDto cadastrarConvenioDto)
     {
-        _logger.LogInformation("Cadastrando convenio.");
-        Convenio convenio = new Convenio(cadastrarConvenioDto);
-        if (convenio != null)
+        try
         {
-            return BadRequest("Já existe convênio cadastrado com esses dados.");
+            //acessando banco de dados via variavel - context onde é buscado um convenio a partir do seu nome, o nome vem da requisição http.
+            var possivelConvenio = await _context.Convenios.Where(convenio => convenio.Nome == cadastrarConvenioDto.Nome).FirstOrDefaultAsync();
+
+            //caso já exista um convenio é retornado para o usuário BadResquest.
+            if(possivelConvenio != null)
+            {
+                return BadRequest("Não foi possível cadastrar o convênio pois já existe um com o mesmo nome.");
+            }
+            _logger.LogInformation("Cadastrando convenio.");
+            Convenio convenio = new Convenio(cadastrarConvenioDto);
+
+            //Adiciona novo convenio a tabela do banco.
+            _context.Convenios.Add(convenio);
+            //Salva as mudanças no banco.
+            await _context.SaveChangesAsync();
+            //retorna uma mensagem para o usuário.
+            return Created(string.Empty, null);
         }
-        _context.Convenios.Add(convenio);
-        await _context.SaveChangesAsync();
-        return Created(string.Empty, null);
+        catch (ApplicationException error)
+        {
+            return BadRequest(error.Message);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest("Não foi possível cadastrar o convênio.");
+        }
     }
 
     [HttpGet]
